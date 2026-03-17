@@ -1914,12 +1914,89 @@ function cpPop(btn,text){
   });
 }
 
-function refreshPopular(){popPage++;popPage%=Math.ceil(ALL_POPULAR_COPIES.length/POP_PAGE_SIZE);const l=document.getElementById('popList');l.style.opacity='0';l.style.transform='translateY(8px)';setTimeout(()=>{renderPopularCopies();l.style.opacity='1';l.style.transform='translateY(0)';},200);}
+function refreshPopular(){if(searchMode){closeSearch();}popPage++;popPage%=Math.ceil(ALL_POPULAR_COPIES.length/POP_PAGE_SIZE);const l=document.getElementById('popList');l.style.opacity='0';l.style.transform='translateY(8px)';setTimeout(()=>{renderPopularCopies();l.style.opacity='1';l.style.transform='translateY(0)';},200);}
 function goPP(p){popPage=p;const l=document.getElementById('popList');l.style.opacity='0';setTimeout(()=>{renderPopularCopies();l.style.opacity='1';l.style.transform='translateY(0)';},200);}
 
 // ========== 事件绑定 & 初始化 ==========
 document.getElementById('userInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();generate();}});
 renderRecommend();
+
+// ========== 全文搜索功能 ==========
+let searchMode = false;
+let originalPopItems = null; // 保存搜索前的状态
+
+function toggleSearchBar() {
+  const bar = document.getElementById('searchBar');
+  if (bar.style.display === 'none') {
+    bar.style.display = '';
+    document.getElementById('searchInput').focus();
+  } else {
+    closeSearch();
+  }
+}
+
+function closeSearch() {
+  document.getElementById('searchBar').style.display = 'none';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResultInfo').style.display = 'none';
+  // 如果之前在搜索模式，恢复原始列表
+  if (searchMode) {
+    searchMode = false;
+    const r = buildShuffledCopies();
+    ALL_POPULAR_COPIES.length = 0;
+    r.forEach(c => ALL_POPULAR_COPIES.push(c));
+    popPage = 0;
+    renderPopularCopies();
+  }
+}
+
+function doSearch() {
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) { toast('请输入搜索关键词'); return; }
+
+  const all = [...ALL_POPULAR_COPIES_HOT, ...ALL_POPULAR_COPIES_NORMAL];
+  const qLower = query.toLowerCase();
+
+  // 搜索：匹配文本内容、标签、主题
+  const results = all.filter(item => {
+    const textMatch = item.text && item.text.toLowerCase().includes(qLower);
+    const tagMatch = item.tags && item.tags.some(t => t.toLowerCase().includes(qLower));
+    const themeMatch = item.theme && item.theme.toLowerCase().includes(qLower);
+    return textMatch || tagMatch || themeMatch;
+  });
+
+  if (!results.length) {
+    toast(`未找到「${query}」相关的文案`);
+    document.getElementById('searchResultInfo').style.display = '';
+    document.getElementById('searchResultInfo').innerHTML =
+      `🔍 搜索 <span class="sr-kw">「${escHtml(query)}」</span> — 未找到相关文案`;
+    return;
+  }
+
+  // 将搜索结果显示在热门列表中
+  searchMode = true;
+  ALL_POPULAR_COPIES.length = 0;
+  results.forEach(c => ALL_POPULAR_COPIES.push(c));
+  popPage = 0;
+  renderPopularCopies();
+
+  // 显示搜索结果信息
+  document.getElementById('searchResultInfo').style.display = '';
+  document.getElementById('searchResultInfo').innerHTML =
+    `🔍 搜索 <span class="sr-kw">「${escHtml(query)}」</span> — 找到 <span class="sr-count">${results.length}</span> 条相关文案`;
+
+  toast(`找到 ${results.length} 条相关文案`);
+}
+
+// HTML转义
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// 回车搜索
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
+});
 
 // ========== 运营抓取配置面板 ==========
 let crawlKeywords = [];

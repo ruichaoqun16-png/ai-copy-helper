@@ -165,6 +165,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .ver-badge{display:inline-block;background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
 .wip-badge{display:inline-block;background:linear-gradient(135deg,#ffa502,#e67e22);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
 
+/* Search Bar */
+.search-bar{margin-bottom:12px;animation:fadeUp .3s ease}
+.search-input-row{display:flex;gap:6px;align-items:center}
+.search-input{flex:1;border:1.5px solid var(--pri);border-radius:12px;padding:10px 14px;font-size:14px;outline:none;font-family:inherit;background:var(--card);color:var(--text);transition:border .2s,box-shadow .2s;box-shadow:0 0 0 3px var(--pri-bg)}
+.search-input::placeholder{color:var(--text3)}
+.search-go-btn{background:var(--pri);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.search-go-btn:hover{opacity:.9}
+.search-close-btn{background:var(--card);color:var(--text2);border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.search-close-btn:hover{background:#f1f2f6}
+.search-result-info{font-size:12px;color:var(--text2);margin-top:8px;padding:6px 10px;background:var(--pri-bg);border-radius:8px;display:flex;align-items:center;gap:6px}
+.search-result-info .sr-count{font-weight:700;color:var(--pri)}
+.search-result-info .sr-kw{font-weight:700;color:var(--hot)}
+.search-highlight{background:#fff3bf;border-radius:2px;padding:0 1px}
+
 /* Crawl Config Panel */
 .crawl-panel{margin:16px 14px 0;background:var(--card);border-radius:18px;box-shadow:var(--sh);overflow:hidden;border:1.5px solid var(--border);transition:border-color .2s}
 .crawl-panel:hover{border-color:var(--pri-lt)}
@@ -281,7 +295,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <h2 style="font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;margin:0">💡 热门文案推荐</h2>
 <span id="refreshTime" style="font-size:11px;color:var(--text3)">每小时自动更新</span>
 </div>
+<div style="display:flex;align-items:center;gap:8px">
+<span class="refresh-btn" onclick="toggleSearchBar()" style="background:var(--pri-bg);color:var(--pri)">🔍 搜索</span>
 <span class="refresh-btn" onclick="refreshPopular()">🔄 换一换</span>
+</div>
+</div>
+<!-- 搜索栏 -->
+<div class="search-bar" id="searchBar" style="display:none">
+  <div class="search-input-row">
+    <input type="text" id="searchInput" class="search-input" placeholder="搜索文案内容、关键词、标签...">
+    <button class="search-go-btn" onclick="doSearch()">搜索</button>
+    <button class="search-close-btn" onclick="closeSearch()">取消</button>
+  </div>
+  <div class="search-result-info" id="searchResultInfo" style="display:none"></div>
 </div>
 <div class="pop-list" id="popList"></div>
 <div class="pop-pager" id="popPager"></div>
