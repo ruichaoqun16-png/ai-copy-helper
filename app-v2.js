@@ -1129,6 +1129,18 @@ const ALL_POPULAR_COPIES_NORMAL = [
   { tags: ['#深夜emo','#孤独','适合深夜发'], text: '白天的我嘻嘻哈哈，深夜的我独自对话。', meta: '2.9w人使用', theme: 'emo', timeFit: ['latenight','evening'] },
   { tags: ['#周末','#躺平','适合周末发'], text: '周末的正确打开方式：睡到自然醒，吃到扶墙走。', meta: '3.7w人使用', theme: '周末', timeFit: ['weekend'] },
   { tags: ['#健身','#晨跑','适合运动打卡发'], text: '今天的汗水，是明天的勋章。跑起来，世界都不一样了。', meta: '2.2w人使用', theme: '健身', timeFit: ['morning','afternoon'] },
+  { tags: ['#颜文字','#元气','适合早安发｜颜文字早安'], text: '(◕‿◕✿) 今天也要元气满满哦～早安！', meta: '1.8w人使用', theme: '颜文字', timeFit: ['morning'] },
+  { tags: ['#颜文字','#加油','适合打气发｜颜文字鼓励'], text: '( •̀ᴗ•́ )و✧ 加油打工人！今天也要好好干活呀～', meta: '2.1w人使用', theme: '颜文字', timeFit: ['morning','daytime','workday'] },
+  { tags: ['#颜文字','#可爱','适合撒娇发｜颜文字卖萌'], text: '꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱ 偷偷看你一眼...被发现了！', meta: '1.9w人使用', theme: '颜文字', timeFit: ['any'] },
+  { tags: ['#颜文字','#开心','适合好心情发｜颜文字开心'], text: '╰(*°▽°*)╯ 太开心了！今天所有的事情都超级顺利！', meta: '2.3w人使用', theme: '颜文字', timeFit: ['any'] },
+  { tags: ['#颜文字','#伤感','适合emo时发｜颜文字难过'], text: '(´;ω;`) 呜呜呜...今天有点不太开心', meta: '1.7w人使用', theme: '颜文字', timeFit: ['evening','latenight'] },
+  { tags: ['#颜文字','#恋爱','适合表白发｜颜文字告白'], text: '(灬º‿º灬)♡ 喜欢你，是我做过最正确的事～', meta: '2.0w人使用', theme: '颜文字', timeFit: ['evening','latenight'] },
+  { tags: ['#颜文字','#搞笑','适合日常发｜颜文字搞笑'], text: '(ᗒᗩᗕ) 我裂开了...这周居然要上六天班！！', meta: '2.5w人使用', theme: '颜文字', timeFit: ['workday'] },
+  { tags: ['#颜文字','#治愈','适合晚安发｜颜文字晚安'], text: '( ˘ω˘ ) 困了困了...今天辛苦了，晚安好梦～♡', meta: '1.6w人使用', theme: '颜文字', timeFit: ['latenight','evening'] },
+  { tags: ['#颜文字','#想念','适合思念发｜颜文字想你'], text: '꒰˘̩̩̩⌣˘̩̩̩๑꒱♡ 好想你呀...距离上次见面已经过了好久', meta: '1.8w人使用', theme: '颜文字', timeFit: ['evening','latenight'] },
+  { tags: ['#颜文字','#庆祝','适合庆祝发｜颜文字庆祝'], text: '(σ≧▽≦)σ 赢了赢了！！终于搞定了这个项目！！', meta: '1.5w人使用', theme: '颜文字', timeFit: ['any'] },
+  { tags: ['#颜文字','#美食','适合干饭发｜颜文字干饭'], text: '(๑•̀ㅁ•́๑)✧ 干饭人干饭魂！今天吃到了超好吃的！', meta: '1.9w人使用', theme: '颜文字', timeFit: ['noon','evening'] },
+  { tags: ['#颜文字','#发疯','适合发疯发｜颜文字崩溃'], text: '( ╯-_-)╯┴—┴  不想上班！(ノ`Д)ノ 掀桌！', meta: '2.2w人使用', theme: '颜文字', timeFit: ['workday','morning'] },
 ];
 
 // ========== 自动填充时间戳 ==========
@@ -1137,6 +1149,15 @@ const ALL_POPULAR_COPIES_NORMAL = [
   ALL_POPULAR_COPIES_HOT.forEach((c,i) => { if(!c.updatedAt){const t=new Date(base.getTime()-(i%6)*3600000);c.updatedAt=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;}});
   ALL_POPULAR_COPIES_NORMAL.forEach((c,i) => { if(!c.updatedAt){const h=Math.floor(i/3)+1;const t=new Date(base.getTime()-h*3600000);c.updatedAt=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;}});
 })();
+
+// 检测文本是否为 ASCII art（多行 braille/特殊字符排列），需要等宽字体渲染
+function isAsciiArt(text) {
+  if (!text) return false;
+  // 包含 braille 字符 (U+2800-U+28FF) 或 box drawing 字符，并且有多行
+  const hasBraille = /[\u2800-\u28FF]/.test(text);
+  const isMultiline = text.includes('\n') && text.split('\n').length >= 3;
+  return hasBraille && isMultiline;
+}
 
 function formatFreshness(d) {
   if(!d) return '';
@@ -1830,7 +1851,7 @@ function renderFilterPage(){
     const fr=formatFreshness(p.updatedAt);
     return `<div class="pop-item${p.hot?' pop-hot':''}">
       ${p.hot?'<span class="hot-badge">hot</span>':''}
-      <div class="pop-tags">${tagsH}</div><div class="pop-text">${p.text}</div>
+      <div class="pop-tags">${tagsH}</div><div class="pop-text${isAsciiArt(p.text)?' ascii-art':''}">${p.text}</div>
       <div class="pop-foot"><span class="pop-meta">${p.hot?'🔥 ':''}${p.meta}${fr?' · '+fr:''}</span>
       <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPop(this,\`${p.text.replace(/`/g,"\\`")}\`)">复制</button>
       <button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneF(${filterPage},${idx},this)">克隆生成</button></div></div>
@@ -1865,7 +1886,7 @@ function renderPopularCopies(){
     const fr=formatFreshness(p.updatedAt),isN=p._isNew;
     return `<div class="pop-item${p.hot?' pop-hot':''}" id="pc-${gi}">
       ${p.hot?'<span class="hot-badge">hot</span>':''}
-      <div class="pop-tags">${tagsH}</div><div class="pop-text">${p.text}</div>
+      <div class="pop-tags">${tagsH}</div><div class="pop-text${isAsciiArt(p.text)?' ascii-art':''}">${p.text}</div>
       <div class="pop-foot"><span class="pop-meta">${p.hot?'🔥 ':''}${p.meta}${fr?' · '+fr:''}</span>
       <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPop(this,\`${p.text.replace(/`/g,"\\`")}\`)">复制</button>
       <button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneG(${gi},this)">克隆生成</button></div></div>
