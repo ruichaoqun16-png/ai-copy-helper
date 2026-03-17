@@ -164,6 +164,68 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 /* Version badge */
 .ver-badge{display:inline-block;background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
 .wip-badge{display:inline-block;background:linear-gradient(135deg,#ffa502,#e67e22);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
+
+/* Crawl Config Panel */
+.crawl-panel{margin:16px 14px 0;background:var(--card);border-radius:18px;box-shadow:var(--sh);overflow:hidden;border:1.5px solid var(--border);transition:border-color .2s}
+.crawl-panel:hover{border-color:var(--pri-lt)}
+.crawl-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none}
+.crawl-hdr-left{display:flex;align-items:center;gap:8px}
+.crawl-icon{font-size:18px}
+.crawl-hdr h3{font-size:14px;font-weight:700;margin:0}
+.crawl-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;display:inline-block}
+.crawl-status.off{background:#f1f2f6;color:var(--text3)}
+.crawl-status.on{background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.crawl-arrow{font-size:12px;color:var(--text3);transition:transform .3s}
+.crawl-arrow.open{transform:rotate(180deg)}
+.crawl-body{padding:0 16px 16px;animation:fadeUp .3s ease}
+.crawl-field{margin-bottom:14px}
+.crawl-field label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px}
+.crawl-sources{display:flex;gap:8px;flex-wrap:wrap}
+.crawl-src-item{cursor:pointer;display:flex;align-items:center}
+.crawl-src-item input{display:none}
+.src-chip{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--card);color:var(--text2);transition:all .2s}
+.crawl-src-item input:checked+.src-chip{border-color:transparent;color:#fff}
+.crawl-src-item input:checked+.src-douyin{background:#010101;border-color:#010101}
+.crawl-src-item input:checked+.src-weibo{background:#ff8200;border-color:#ff8200}
+.crawl-src-item input:checked+.src-xhs{background:#ff2442;border-color:#ff2442}
+.crawl-kw-wrap{background:#f8f9fa;border-radius:12px;padding:10px;border:1.5px solid var(--border)}
+.crawl-kw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:0}
+.crawl-kw-tags:empty{margin-bottom:0}
+.crawl-kw-tag{display:inline-flex;align-items:center;gap:4px;background:var(--pri-bg);color:var(--pri);padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600}
+.crawl-kw-tag .kw-del{cursor:pointer;font-size:14px;opacity:.6;transition:opacity .2s;line-height:1}
+.crawl-kw-tag .kw-del:hover{opacity:1}
+.crawl-kw-input-row{display:flex;gap:6px}
+.crawl-kw-input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit;transition:border .2s}
+.crawl-kw-input:focus{border-color:var(--pri)}
+.crawl-kw-add{background:var(--pri-bg);color:var(--pri);border:1.5px solid var(--pri);border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.crawl-kw-add:hover{background:var(--pri);color:#fff}
+.crawl-freq-row{display:flex;align-items:center;gap:8px}
+.crawl-select{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit;background:var(--card);color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%23636e72' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.crawl-select:focus{border-color:var(--pri)}
+.crawl-actions{display:flex;gap:8px}
+.crawl-btn{flex:1;padding:10px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.crawl-btn-start{background:linear-gradient(135deg,#00b894,#00cec9);color:#fff}
+.crawl-btn-start:hover{opacity:.9;transform:scale(.98)}
+.crawl-btn-start.running{background:linear-gradient(135deg,#ff6b6b,#ee5a24)}
+.crawl-btn-now{background:var(--pri-bg);color:var(--pri);border:1.5px solid var(--pri)}
+.crawl-btn-now:hover{background:var(--pri);color:#fff}
+.crawl-log{border-top:1px dashed var(--border);padding:12px 16px}
+.crawl-log-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12px;font-weight:600;color:var(--text2)}
+.crawl-log-clear{color:var(--text3);cursor:pointer;font-weight:500;font-size:11px}
+.crawl-log-clear:hover{color:var(--hot)}
+.crawl-log-list{max-height:200px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.crawl-log-list::-webkit-scrollbar{width:3px}.crawl-log-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.crawl-log-item{background:#f8f9fa;border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;animation:fadeUp .3s ease both}
+.crawl-log-item:last-child{margin-bottom:0}
+.crawl-log-time{color:var(--text3);font-size:11px;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.crawl-log-sources{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
+.crawl-log-src{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;color:#fff}
+.crawl-log-src.log-douyin{background:#010101}
+.crawl-log-src.log-weibo{background:#ff8200}
+.crawl-log-src.log-xhs{background:#ff2442}
+.crawl-log-kws{color:var(--pri);font-weight:600}
+.crawl-log-count{color:var(--ok);font-weight:700}
 </style>
 </head>
 <body>
@@ -237,6 +299,67 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </div>
 <div class="pop-list" id="filterList"></div>
 <div class="pop-pager" id="filterPager"></div>
+</div>
+
+<!-- Crawl Config Panel (运营配置面板) -->
+<div class="crawl-panel" id="crawlPanel">
+<div class="crawl-hdr" onclick="toggleCrawlPanel()">
+  <div class="crawl-hdr-left">
+    <span class="crawl-icon">🕷️</span>
+    <h3>内容抓取配置</h3>
+    <span class="crawl-status" id="crawlStatus">未开启</span>
+  </div>
+  <span class="crawl-arrow" id="crawlArrow">▼</span>
+</div>
+<div class="crawl-body" id="crawlBody" style="display:none">
+  <!-- 抓取源 -->
+  <div class="crawl-field">
+    <label>📡 抓取源（可多选）</label>
+    <div class="crawl-sources" id="crawlSources">
+      <label class="crawl-src-item"><input type="checkbox" value="douyin" checked><span class="src-chip src-douyin">抖音</span></label>
+      <label class="crawl-src-item"><input type="checkbox" value="weibo" checked><span class="src-chip src-weibo">微博</span></label>
+      <label class="crawl-src-item"><input type="checkbox" value="xiaohongshu" checked><span class="src-chip src-xhs">小红书</span></label>
+    </div>
+  </div>
+  <!-- 抓取关键词 -->
+  <div class="crawl-field">
+    <label>🔑 抓取关键词</label>
+    <div class="crawl-kw-wrap">
+      <div class="crawl-kw-tags" id="crawlKwTags"></div>
+      <div class="crawl-kw-input-row">
+        <input type="text" id="crawlKwInput" placeholder="输入关键词，回车添加" class="crawl-kw-input">
+        <button class="crawl-kw-add" onclick="addCrawlKw()">+ 添加</button>
+      </div>
+    </div>
+  </div>
+  <!-- 抓取频次 -->
+  <div class="crawl-field">
+    <label>⏱️ 抓取频次</label>
+    <div class="crawl-freq-row">
+      <select id="crawlFreq" class="crawl-select">
+        <option value="30">每 30 分钟</option>
+        <option value="60" selected>每 1 小时</option>
+        <option value="120">每 2 小时</option>
+        <option value="360">每 6 小时</option>
+        <option value="720">每 12 小时</option>
+        <option value="1440">每 24 小时</option>
+      </select>
+    </div>
+  </div>
+  <!-- 操作按钮 -->
+  <div class="crawl-actions">
+    <button class="crawl-btn crawl-btn-start" id="crawlStartBtn" onclick="toggleCrawl()">▶ 开启抓取</button>
+    <button class="crawl-btn crawl-btn-now" onclick="crawlNow()">⚡ 立即抓取一次</button>
+  </div>
+</div>
+<!-- 抓取日志 -->
+<div class="crawl-log" id="crawlLog" style="display:none">
+  <div class="crawl-log-hdr">
+    <span>📋 抓取日志</span>
+    <span class="crawl-log-clear" onclick="clearCrawlLog()">清空</span>
+  </div>
+  <div class="crawl-log-list" id="crawlLogList"></div>
+</div>
 </div>
 
 <!-- Input (底部) -->

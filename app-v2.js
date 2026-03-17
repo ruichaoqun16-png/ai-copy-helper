@@ -1920,3 +1920,330 @@ function goPP(p){popPage=p;const l=document.getElementById('popList');l.style.op
 // ========== 事件绑定 & 初始化 ==========
 document.getElementById('userInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();generate();}});
 renderRecommend();
+
+// ========== 运营抓取配置面板 ==========
+let crawlKeywords = [];
+let crawlTimer = null;
+let crawlRunning = false;
+let crawlLogs = [];
+
+// 面板展开/收起
+function toggleCrawlPanel() {
+  const body = document.getElementById('crawlBody');
+  const arrow = document.getElementById('crawlArrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.classList.add('open');
+  } else {
+    body.style.display = 'none';
+    arrow.classList.remove('open');
+  }
+}
+
+// 关键词管理
+function renderCrawlKwTags() {
+  const container = document.getElementById('crawlKwTags');
+  container.innerHTML = crawlKeywords.map((kw, i) =>
+    `<span class="crawl-kw-tag">${kw}<span class="kw-del" onclick="removeCrawlKw(${i})">×</span></span>`
+  ).join('');
+}
+
+function addCrawlKw() {
+  const input = document.getElementById('crawlKwInput');
+  const kw = input.value.trim();
+  if (!kw) return;
+  if (crawlKeywords.includes(kw)) { toast('关键词已存在'); return; }
+  if (crawlKeywords.length >= 10) { toast('最多添加10个关键词'); return; }
+  crawlKeywords.push(kw);
+  input.value = '';
+  renderCrawlKwTags();
+  saveCrawlConfig();
+  // 如果配置完整，自动开启抓取
+  autoStartCrawlIfReady();
+}
+
+function removeCrawlKw(i) {
+  crawlKeywords.splice(i, 1);
+  renderCrawlKwTags();
+  saveCrawlConfig();
+  if (crawlKeywords.length === 0 && crawlRunning) {
+    stopCrawl();
+    toast('关键词清空，抓取已暂停');
+  }
+}
+
+// 回车添加关键词
+document.getElementById('crawlKwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addCrawlKw(); }
+});
+
+// 获取选中的源
+function getSelectedSources() {
+  const checks = document.querySelectorAll('#crawlSources input[type=checkbox]');
+  return Array.from(checks).filter(c => c.checked).map(c => c.value);
+}
+
+// 源名称映射
+const SOURCE_NAME_MAP = { douyin: '抖音', weibo: '微博', xiaohongshu: '小红书' };
+const SOURCE_LOG_CLASS = { douyin: 'log-douyin', weibo: 'log-weibo', xiaohongshu: 'log-xhs' };
+
+// 获取频次分钟数
+function getCrawlFreqMin() {
+  return parseInt(document.getElementById('crawlFreq').value) || 60;
+}
+
+// 模拟抓取：生成随机内容并添加到文案库
+function simulateCrawl() {
+  const sources = getSelectedSources();
+  const keywords = crawlKeywords;
+  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
+  if (!keywords.length) { toast('请至少添加一个关键词'); return; }
+
+  const now = new Date();
+  const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  // 每个源 × 每个关键词 随机产出1-3条
+  let totalCount = 0;
+  const perSourceCount = {};
+
+  const crawlTemplates = [
+    kw => `今天的${kw}真的太绝了，姐妹们快冲！`,
+    kw => `关于${kw}，我有一个不成熟的小建议...`,
+    kw => `${kw}｜这是我见过最走心的分享了`,
+    kw => `被${kw}治愈的一天 🌸`,
+    kw => `${kw}真的yyds，不接受反驳！`,
+    kw => `分享一个${kw}相关的宝藏内容～`,
+    kw => `刷到一条关于${kw}的内容，太有共鸣了`,
+    kw => `${kw}爱好者集合！这条不许划走`,
+    kw => `来聊聊${kw}这件事，评论区炸了`,
+    kw => `我的${kw}日记 📝 今天也很充实`,
+    kw => `${kw}的正确打开方式，建议收藏！`,
+    kw => `如果你也喜欢${kw}，那我们就是好朋友了 ♡`,
+    kw => `${kw}初体验，完全超出预期！`,
+    kw => `每次看到${kw}相关的内容都会心动`,
+    kw => `${kw}这个话题最近好火，来凑个热闹`,
+  ];
+
+  for (const src of sources) {
+    perSourceCount[src] = 0;
+    for (const kw of keywords) {
+      const count = Math.floor(Math.random() * 3) + 1;
+      for (let j = 0; j < count; j++) {
+        const tmpl = crawlTemplates[Math.floor(Math.random() * crawlTemplates.length)];
+        const text = tmpl(kw);
+        const srcLabel = src === 'xiaohongshu' ? 'xhs' : src;
+        const newItem = {
+          tags: [`#${kw}`, `#${SOURCE_NAME_MAP[src]}热门`, `来源：${SOURCE_NAME_MAP[src]}`],
+          text: text,
+          meta: `${(Math.random()*5+0.5).toFixed(1)}w人使用`,
+          theme: kw,
+          src: srcLabel,
+          updatedAt: dateStr,
+          timeFit: ['any'],
+          _crawled: true
+        };
+        ALL_POPULAR_COPIES_NORMAL.push(newItem);
+        totalCount++;
+        perSourceCount[src]++;
+      }
+    }
+  }
+
+  // 重新构建 shuffled copies
+  const r = buildShuffledCopies();
+  ALL_POPULAR_COPIES.length = 0;
+  r.forEach(c => ALL_POPULAR_COPIES.push(c));
+
+  // 如果当前在推荐列表页面，刷新显示
+  if (document.getElementById('recSection').style.display !== 'none') {
+    renderPopularCopies();
+  }
+
+  // 添加日志
+  const logEntry = {
+    time: timeStr,
+    sources: sources,
+    keywords: [...keywords],
+    total: totalCount,
+    perSource: { ...perSourceCount }
+  };
+  crawlLogs.unshift(logEntry);
+  if (crawlLogs.length > 20) crawlLogs.pop(); // 最多保留20条日志
+  renderCrawlLog();
+
+  toast(`✅ 抓取完成！新增 ${totalCount} 条内容`);
+}
+
+// 渲染抓取日志
+function renderCrawlLog() {
+  const logSection = document.getElementById('crawlLog');
+  const logList = document.getElementById('crawlLogList');
+  if (!crawlLogs.length) {
+    logSection.style.display = 'none';
+    return;
+  }
+  logSection.style.display = '';
+  logList.innerHTML = crawlLogs.map(log => {
+    const srcBadges = log.sources.map(s =>
+      `<span class="crawl-log-src ${SOURCE_LOG_CLASS[s]}">${SOURCE_NAME_MAP[s]}</span>`
+    ).join('');
+    const kwStr = log.keywords.map(k => `「${k}」`).join(' ');
+    const perSrcDetail = log.sources.map(s =>
+      `${SOURCE_NAME_MAP[s]} ${log.perSource[s]}条`
+    ).join('、');
+    return `<div class="crawl-log-item">
+      <div class="crawl-log-time">🕐 ${log.time}</div>
+      <div class="crawl-log-sources">${srcBadges}</div>
+      <div>关键词：<span class="crawl-log-kws">${kwStr}</span></div>
+      <div>本次抓取 <span class="crawl-log-count">${log.total}</span> 条（${perSrcDetail}）</div>
+    </div>`;
+  }).join('');
+}
+
+function clearCrawlLog() {
+  crawlLogs = [];
+  renderCrawlLog();
+}
+
+// 开启/关闭抓取
+function toggleCrawl() {
+  if (crawlRunning) {
+    stopCrawl();
+  } else {
+    startCrawl();
+  }
+}
+
+function startCrawl() {
+  const sources = getSelectedSources();
+  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
+  if (!crawlKeywords.length) { toast('请至少添加一个关键词'); return; }
+
+  crawlRunning = true;
+  updateCrawlUI();
+  saveCrawlConfig();
+
+  // 立即执行一次
+  simulateCrawl();
+
+  // 设置定时器
+  const freqMs = getCrawlFreqMin() * 60 * 1000;
+  crawlTimer = setInterval(() => {
+    simulateCrawl();
+  }, freqMs);
+
+  toast(`🕷️ 抓取已开启，每 ${getCrawlFreqLabel()} 自动执行`);
+}
+
+function stopCrawl() {
+  crawlRunning = false;
+  if (crawlTimer) {
+    clearInterval(crawlTimer);
+    crawlTimer = null;
+  }
+  updateCrawlUI();
+  saveCrawlConfig();
+  toast('抓取已暂停');
+}
+
+function crawlNow() {
+  const sources = getSelectedSources();
+  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
+  if (!crawlKeywords.length) { toast('请至少添加一个关键词'); return; }
+  simulateCrawl();
+}
+
+function getCrawlFreqLabel() {
+  const v = getCrawlFreqMin();
+  const map = { 30: '30分钟', 60: '1小时', 120: '2小时', 360: '6小时', 720: '12小时', 1440: '24小时' };
+  return map[v] || v + '分钟';
+}
+
+function updateCrawlUI() {
+  const statusEl = document.getElementById('crawlStatus');
+  const btn = document.getElementById('crawlStartBtn');
+  if (crawlRunning) {
+    statusEl.textContent = `运行中 · 每${getCrawlFreqLabel()}`;
+    statusEl.className = 'crawl-status on';
+    btn.textContent = '⏸ 暂停抓取';
+    btn.classList.add('running');
+  } else {
+    statusEl.textContent = '未开启';
+    statusEl.className = 'crawl-status off';
+    btn.textContent = '▶ 开启抓取';
+    btn.classList.remove('running');
+  }
+}
+
+// 配置完整时自动开启
+function autoStartCrawlIfReady() {
+  if (crawlRunning) return; // 已在运行
+  const sources = getSelectedSources();
+  if (sources.length && crawlKeywords.length) {
+    startCrawl();
+  }
+}
+
+// 源选择变化时保存并检查自动开启
+document.querySelectorAll('#crawlSources input[type=checkbox]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    saveCrawlConfig();
+    if (crawlRunning) {
+      // 重启定时器以更新配置
+      stopCrawl();
+      startCrawl();
+    }
+  });
+});
+
+// 频次变化时
+document.getElementById('crawlFreq').addEventListener('change', () => {
+  saveCrawlConfig();
+  if (crawlRunning) {
+    stopCrawl();
+    startCrawl();
+  }
+});
+
+// 持久化配置到 localStorage
+function saveCrawlConfig() {
+  const config = {
+    sources: getSelectedSources(),
+    keywords: crawlKeywords,
+    freq: getCrawlFreqMin(),
+    running: crawlRunning
+  };
+  try { localStorage.setItem('crawl_config', JSON.stringify(config)); } catch(e) {}
+}
+
+function loadCrawlConfig() {
+  try {
+    const raw = localStorage.getItem('crawl_config');
+    if (!raw) return;
+    const config = JSON.parse(raw);
+    // 恢复源选择
+    if (config.sources) {
+      document.querySelectorAll('#crawlSources input[type=checkbox]').forEach(cb => {
+        cb.checked = config.sources.includes(cb.value);
+      });
+    }
+    // 恢复关键词
+    if (config.keywords && config.keywords.length) {
+      crawlKeywords = config.keywords;
+      renderCrawlKwTags();
+    }
+    // 恢复频次
+    if (config.freq) {
+      document.getElementById('crawlFreq').value = String(config.freq);
+    }
+    // 恢复运行状态
+    if (config.running && config.sources && config.sources.length && config.keywords && config.keywords.length) {
+      startCrawl();
+    }
+  } catch(e) {}
+}
+
+// 初始化
+updateCrawlUI();
+loadCrawlConfig();
