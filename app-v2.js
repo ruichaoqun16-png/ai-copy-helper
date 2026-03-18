@@ -4401,11 +4401,17 @@ function updateRefreshTime(){
 // ========== 渲染推荐 ==========
 function renderRecommend(){
   const srcB=s=>s==='xhs'?'<span class="source-badge source-xhs">小红书</span>':s==='weibo'?'<span class="source-badge source-weibo">微博</span>':s==='douyin'?'<span class="source-badge source-douyin">抖音</span>':s==='ted'?'<span class="source-badge source-ted">TED</span>':'';
-  // 按时间适配度排序热门话题：适合当前时段的排前面
-  const sortedTopics = [...HOT_TOPICS].sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
+  // 按时间适配度排序热门话题：适合当前时段的排前面，过滤掉没有匹配内容的话题
+  const sortedTopics = [...HOT_TOPICS]
+    .map(t => {
+      const origIdx = HOT_TOPICS.indexOf(t);
+      const count = matchCopies(t.matchTags, t.matchThemes, t.matchText).length;
+      return { ...t, _origIdx: origIdx, _count: count };
+    })
+    .filter(t => t._count > 0)
+    .sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
   document.getElementById('hotTopics').innerHTML=sortedTopics.map((t,i)=>{
-    const origIdx = HOT_TOPICS.indexOf(t);
-    return `<div class="hot-item" onclick="openTopic(${origIdx})"><div class="hot-rank r${i+1}">${i+1}</div><div class="hot-title">${t.title} ${srcB(t.src)}</div><div class="hot-heat">${t.heat}</div></div>`;
+    return `<div class="hot-item" onclick="openTopic(${t._origIdx})"><div class="hot-rank r${i+1}">${i+1}</div><div class="hot-title">${t.title} ${srcB(t.src)}</div><div class="hot-heat">${t.heat}</div></div>`;
   }).join('');
   // 按时间适配度排序分类推荐，并过滤掉句子数<=10的分类
   const sortedCats = [...REC_CATEGORIES]
@@ -4414,7 +4420,7 @@ function renderRecommend(){
       const count = matchCopies(c.matchTags, c.matchThemes, []).length;
       return { ...c, _origIdx: origIdx, _count: count };
     })
-    .filter(c => c._count > 10)
+    .filter(c => c._count > 0)
     .sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
   const CAT_SHOW_LIMIT = 10;
   const catContainer = document.getElementById('recCats');
