@@ -5080,16 +5080,70 @@ const CLONE_TEMPLATES = {
     '(σ≧▽≦)σ 赢了！','( ˊ̱˂˃ˋ̱ ) 不开心',
   ],
 };
-const CLONE_FALLBACK = ['类似的感觉，不同的表达——每一句都值得被收藏。','换个角度看同样的风景，依然很美。','同频共振的文字，总能击中柔软的部分。','文字的力量在于：你以为只是自己的心情，其实全世界都懂。'];
+// theme别名映射：数据中的theme -> CLONE_TEMPLATES中的key
+const THEME_ALIAS = {
+  'emoji':'颜文字','emo文案':'emo','励志文案':'励志','早安文案':'早安','晚安文案':'晚安',
+  '恋爱日常':'恋爱','想念':'恋爱','有梗':'搞笑','乱回':'搞笑','发疯':'搞笑','显眼包':'搞笑',
+  '热梗':'搞笑','怼人':'搞笑','拒绝':'搞笑','打工人':'职场','破冰':'搞笑',
+  '金句':'哲思','高质量文案':'哲思','经典语录':'哲思','文案':'哲思',
+  '安慰':'治愈','好运':'励志','ins':'恋爱','PLOG':'恋爱','感谢':'治愈',
+  '彩虹屁':'治愈','生日祝福':'治愈','生日':'治愈',
+  '春日':'治愈','萌娃':'恋爱','星座':'MBTI','精选':'哲思',
+};
+// 关联theme组：互相之间可以匹配
+const RELATED_THEMES = [
+  ['emoji','颜文字'],
+  ['早安','早安文案'],['晚安','晚安文案'],
+  ['恋爱','恋爱日常','想念'],
+  ['搞笑','有梗','乱回','发疯','显眼包','热梗','怼人','拒绝','破冰'],
+  ['职场','打工人'],
+  ['emo','emo文案','励志文案','安慰','治愈'],
+  ['金句','高质量文案','经典语录','文案','哲思','格局'],
+  ['MBTI','星座'],
+  ['ins','PLOG','旅行','春日'],
+  ['生日','生日祝福'],
+  ['美食'],['萌娃'],['好运'],['彩虹屁','感谢'],
+  ['朋友圈文案'],
+];
+function getRelatedThemes(theme) {
+  const res = new Set([theme]);
+  for (const group of RELATED_THEMES) {
+    if (group.includes(theme)) { group.forEach(t => res.add(t)); }
+  }
+  return res;
+}
 
 function generateClones(item) {
-  const theme=item.theme||'';
-  const allC=[...ALL_POPULAR_COPIES_HOT,...ALL_POPULAR_COPIES_NORMAL];
-  const sameT=allC.filter(c=>c.text!==item.text&&(c.theme===theme||(c.tags&&item.tags&&item.tags.some(t=>c.tags.includes(t))))).sort(()=>Math.random()-.5).slice(0,2).map(c=>c.text);
-  const tmpl=(CLONE_TEMPLATES[theme]||[]).filter(t=>t!==item.text).sort(()=>Math.random()-.5);
-  const all=[...new Set([...sameT,...tmpl])].filter(t=>t!==item.text);
-  if(all.length<2) all.push(...CLONE_FALLBACK.sort(()=>Math.random()-.5).slice(0,3-all.length));
-  return all.slice(0,3);
+  const theme = item.theme || '';
+  const itemText = item.text || '';
+  const allC = [...COMMON_LIB_SEEDS, ...CRAWLED_REAL_CONTENT];
+  const relatedThemes = getRelatedThemes(theme);
+
+  // 第1优先：从全部数据中找同theme的内容
+  const sameTheme = allC.filter(c => c.text !== itemText && c.theme === theme)
+    .sort(() => Math.random() - .5);
+  // 第2优先：从全部数据中找关联theme的内容
+  const relatedTheme = allC.filter(c => c.text !== itemText && c.theme !== theme && relatedThemes.has(c.theme))
+    .sort(() => Math.random() - .5);
+  // 第3优先：从全部数据中找同tag的内容
+  const sameTag = allC.filter(c => c.text !== itemText && !relatedThemes.has(c.theme) && c.tags && item.tags && item.tags.some(t => c.tags.includes(t)))
+    .sort(() => Math.random() - .5);
+  // 第4优先：从CLONE_TEMPLATES中找（带别名映射）
+  const templateKey = THEME_ALIAS[theme] || theme;
+  const tmpl = (CLONE_TEMPLATES[templateKey] || []).filter(t => t !== itemText)
+    .sort(() => Math.random() - .5);
+
+  // 按优先级合并去重
+  const pool = [...sameTheme.map(c=>c.text), ...relatedTheme.map(c=>c.text), ...sameTag.map(c=>c.text), ...tmpl];
+  const seen = new Set([itemText]);
+  const results = [];
+  for (const t of pool) {
+    if (seen.has(t)) continue;
+    seen.add(t);
+    results.push(t);
+    if (results.length >= 3) break;
+  }
+  return results;
 }
 
 // ========== 每小时刷新（v4: 配合自动抓取）==========
