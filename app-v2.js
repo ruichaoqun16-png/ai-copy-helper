@@ -4408,7 +4408,7 @@ function renderRecommend(){
       const count = matchCopies(t.matchTags, t.matchThemes, t.matchText).length;
       return { ...t, _origIdx: origIdx, _count: count };
     })
-    .filter(t => t._count > 0)
+    .filter(t => t._count > 20)
     .sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
   document.getElementById('hotTopics').innerHTML=sortedTopics.map((t,i)=>{
     return `<div class="hot-item" onclick="openTopic(${t._origIdx})"><div class="hot-rank r${i+1}">${i+1}</div><div class="hot-title">${t.title} ${srcB(t.src)}</div><div class="hot-heat">${t.heat}</div></div>`;
