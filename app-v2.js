@@ -1,3 +1,306 @@
+const COMMON_LIB_SEEDS = [
+  { tags: ['#精选内容','#精选内容','适合配图发｜创意排版'], text: '⣠⠛⠛⣄⣠⠶⠛⠛⠛⠶⣄⣠⠛⠛⣄\n⢿　 ⠋　　　　 　⠙　 ⡿\n⣾　  ♥︎ ᴥ ♥︎　   ⣷\n⠻⣄　             ⣠⠟\n⣠⡿       🎀         ⢿⣄\n⠙⠛⠋                 ⠙⠛⠋\n⢿⣀⣀⡿ ⢿⣀⣀⡿\n想陪你翻山越岭 想陪你吹着日落 看星星\n┆　┆　┆　┆　┆\n┆　┆   ˖☆ ⭑┆ ˖ .☆ .  ˖\n☆⊹  ┆ ˖ 　⊹  ★ ⋆.˚  ⊹\n˖⋆˚★ ₊ ⊹　  ˖  ₊   ˖\n. 　⊹  ˖　　　  ˖\n.', meta: '3.0w人使用', theme: '精选', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合早上发圈｜元气满满'], text: '当你决定要出发时，最艰难的部分就已经结束了。早安，今天也要顺利。', meta: '2.1w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合问候发｜温暖开场'], text: '早安！把烦恼留在昨晚，带着热爱和期待，开启元气满满的一天吧 ✨', meta: '4.0w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合早起发｜正能量打卡'], text: '正在重启 good morning 🔋 又是需要咖啡续命的一天☕️', meta: '2.1w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合早上发圈｜元气满满'], text: '太阳起了我也起，我是人间小甜饼🥞 早安呀！', meta: '2.3w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合问候发｜温暖开场'], text: '滴~ 你的早安问候已送达，请查收今日份的好心情✨', meta: '4.0w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合早起发｜正能量打卡'], text: '(๑•̀ㅂ•́)و✧ 早安！今天也要元气满满鸭！', meta: '2.5w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#早安','#早安','适合早上发圈｜元气满满'], text: '☀️ ٩( \'ω\' )و 起床啦！伸个懒腰迎接新的一天~', meta: '3.2w人使用', theme: '早安', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合睡前发圈｜温柔收尾'], text: '时间不早了，您今天辛苦了，早点休息，晚安。', meta: '3.2w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合深夜发｜治愈陪伴'], text: '好的收到，那我就先不打扰您休息了，祝您晚安。', meta: '3.8w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合晚安发｜暖心告别'], text: '今天的烦恼就到此为止啦，明天依旧光芒万丈✨ 晚安！', meta: '3.0w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合睡前发圈｜温柔收尾'], text: '熬夜容易变丑，我先去梦里占个好位置啦，晚安💤', meta: '2.3w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合深夜发｜治愈陪伴'], text: '宇宙已经帮你把今天的疲惫打包带走啦，盖好被子，安心睡吧🌙', meta: '3.5w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#晚安','#晚安','适合晚安发｜暖心告别'], text: '无论今天过得怎样，都请给自己一个拥抱。晚安，好梦。', meta: '2.3w人使用', theme: '晚安', src: 'lib', timeFit: ['evening','latenight'], _isCommonLib: true },
+  { tags: ['#破冰开场','#破冰开场','适合初识发｜高情商社交'], text: '您好，久仰大名，很高兴能加上您的微信，希望能有机会向您请教学习。', meta: '3.2w人使用', theme: '破冰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#破冰开场','#破冰开场','适合加好友发｜自然开场'], text: '您好，我是XX推荐过来的，关于那个项目想跟您简单交流一下，您看什么时候方便？', meta: '3.2w人使用', theme: '破冰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#破冰开场','#破冰开场','适合社交发｜打破尴尬'], text: '捕捉到一只野生的小可爱，不知道有没有荣幸认识一下？👀', meta: '3.2w人使用', theme: '破冰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#破冰开场','#破冰开场','适合初识发｜高情商社交'], text: '哈喽👋 刚刚看到你的朋友圈，觉得你是个很有趣的人，忍不住来打个招呼~', meta: '2.5w人使用', theme: '破冰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#破冰开场','#破冰开场','适合加好友发｜自然开场'], text: '刚刚路过我们以前常去的那家店，突然想你了，最近过得怎么样呀？', meta: '3.8w人使用', theme: '破冰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#满分谢词','#满分谢词','适合感谢时发｜真诚满分'], text: '收到，谢谢您的指导和认可，这次多亏了您把关，后续我会继续跟进好细节。', meta: '3.0w人使用', theme: '感谢', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#满分谢词','#满分谢词','适合工作回复｜高情商表达'], text: '感谢您的理解与支持，跟您合作一直都特别顺畅，期待咱们下次的项目！', meta: '2.5w人使用', theme: '感谢', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#满分谢词','#满分谢词','适合职场发｜得体致谢'], text: '谢谢您的费心安排，细节满满，能看出您真的费心了，非常感谢您🙏', meta: '3.2w人使用', theme: '感谢', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#满分谢词','#满分谢词','适合感谢时发｜真诚满分'], text: '真的太感谢啦！！😭 你的帮忙简直是雪中送炭，改天必须请你吃饭！', meta: '3.0w人使用', theme: '感谢', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#满分谢词','#满分谢词','适合工作回复｜高情商表达'], text: '辛苦辛苦，每次有你在都觉得特别踏实，大恩不言谢，以后有事随时叫我🤝', meta: '4.0w人使用', theme: '感谢', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合聊天接话｜梗王上线'], text: '你大抵是倦了🥀 竟回我这般敷衍...罢了罢了，终究是我错付了💔', meta: '2.1w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合日常发｜互联网嘴替'], text: '确诊为：没有周末就会碎掉的脆皮打工人💀', meta: '3.8w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合玩梗发｜笑到头掉'], text: '只要我敲键盘的速度够快，老板就看不出我在摸鱼🤡', meta: '2.3w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合聊天接话｜梗王上线'], text: '听完你的发言，我真是汗流浃背了老弟💦', meta: '3.8w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合日常发｜互联网嘴替'], text: '已老实，求放过🧎‍♂️', meta: '2.5w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#网络热梗','#网络热梗','适合玩梗发｜笑到头掉'], text: '精神状态良好，疯得很认真💢', meta: '2.8w人使用', theme: '热梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合思念时发｜含蓄表达'], text: '今天降温了，突然有点想吃家里做的饭了，你们在家注意保暖哦。', meta: '1.9w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合降温天发｜温暖牵挂'], text: '今天的晚霞很好看🌅 第一反应是想拍给你看。', meta: '2.3w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合深夜发｜悄悄想你'], text: '突然觉得今天的风有点像你🍃 忍不住想你了。', meta: '1.9w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合思念时发｜含蓄表达'], text: '没什么特别的事，就是想听听你的声音啦。', meta: '2.1w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合降温天发｜温暖牵挂'], text: '连输入法都默认打出你的名字了，你看，连手机都在想你📱💕', meta: '4.0w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#想念的话','#想念的话','适合深夜发｜悄悄想你'], text: '刚刚吃到一家很好吃的店，下次我们一起来吧！✨', meta: '2.8w人使用', theme: '想念', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合夸人发｜花式吹捧'], text: '这份方案的逻辑太清晰了，直接拿去当行业标杆都不为过，又跟着您学到了。', meta: '2.3w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合评论发｜高级赞美'], text: '每次跟您对接都特别踏实，执行力和专业度真的没话说👍', meta: '1.9w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合朋友圈发｜社交高手'], text: '朋友圈又多了一张世界名画📸 这审美简直是在我的心巴上跳舞！', meta: '3.0w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合夸人发｜花式吹捧'], text: '怎么会有人连随手拍的日常都这么有电影感啊🔥', meta: '3.2w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合评论发｜高级赞美'], text: '今天也是为你的魅力疯狂心动的一天🥺', meta: '3.2w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#彩虹屁','#彩虹屁','适合朋友圈发｜社交高手'], text: '跟你聊天简直如沐春风，你怎么总是能精准接住我的每一个梗呀✨', meta: '1.9w人使用', theme: '彩虹屁', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合祝福发｜真诚满分'], text: '祝您生日快乐！愿您新的一岁身体健康，工作顺利，万事顺遂。', meta: '4.0w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合生日发｜暖心贺词'], text: '感谢您一直以来的照顾和指导，祝您生日快乐，阖家幸福🎉', meta: '3.8w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合庆祝发｜仪式感满满'], text: '恭喜你又成功升级啦🆙 愿新的一岁，烦恼清零，暴富暴美！💰', meta: '1.9w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合祝福发｜真诚满分'], text: '距离百岁老人又近了一步🧓 哈哈！生日快乐🥳 愿你永远年轻，永远热泪盈眶。', meta: '4.0w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合生日发｜暖心贺词'], text: '愿你做自己的太阳☀️ 无需凭借谁的光。生日快乐，我的大宝贝💖', meta: '2.5w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日快乐','#生日快乐','适合庆祝发｜仪式感满满'], text: '祝这世界继续热闹，祝你还是你。生日快乐，我会一直陪着你🎂', meta: '3.2w人使用', theme: '生日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合职场发｜优雅说不'], text: '领导，这个项目我也很想参与，但目前手头跟进的现有项目正处于关键期，怕精力分散影响交付质量，您看这次是否先安排其他同事？', meta: '4.0w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合社交发｜不伤感情'], text: '感谢您的认可！不过结合我们目前的业务规划，可能暂时不太匹配，期待以后有机会再合作。', meta: '2.5w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合回复发｜高情商边界'], text: '实在不好意思啊，我最近刚交了房租，手头也比较紧，这次可能帮不上忙了，希望你能顺利度过难关🙏', meta: '2.8w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合职场发｜优雅说不'], text: '这个提议很棒耶！但我今晚已经有安排啦，实在分身乏术，祝你们玩得开心🎉', meta: '2.8w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合社交发｜不伤感情'], text: '谢谢你的喜欢，你真的很优秀，但我目前只想保持朋友关系，希望你能遇到更懂你的人。', meta: '2.8w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#高情商拒绝','#高情商拒绝','适合回复发｜高情商边界'], text: '你的心意我领啦，不过这个礼物太贵重了，我实在不好意思收，心意最重要，我心领啦！', meta: '3.2w人使用', theme: '拒绝', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#安慰鼓励','#安慰鼓励','适合安慰时发｜温暖治愈'], text: '尽力就好啦，别太苛责自己，先好好休息。', meta: '2.3w人使用', theme: '安慰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#安慰鼓励','#安慰鼓励','适合朋友低谷发｜力量传递'], text: '别一个人扛，天塌下来有高个顶着呢，有需要随时找我☕️', meta: '1.9w人使用', theme: '安慰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#安慰鼓励','#安慰鼓励','适合鼓励发｜温柔后盾'], text: '换谁都会生气的！别内耗了，晚上带你去吃顿好的发泄下🍻', meta: '3.0w人使用', theme: '安慰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#安慰鼓励','#安慰鼓励','适合安慰时发｜温暖治愈'], text: '允许自己偶尔做个“废物”也没关系的，弦绷得太紧会断的。今天什么都别想了，好好睡一觉🫂', meta: '2.3w人使用', theme: '安慰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#安慰鼓励','#安慰鼓励','适合朋友低谷发｜力量传递'], text: '在外面辛苦啦，在我面前你不需要一直保持坚强，想哭想闹都可以，我一直都在你身边❤️', meta: '2.8w人使用', theme: '安慰', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#职场生存','#职场生存','适合工作回复｜专业满分'], text: '收到，我这边马上拉齐一下相关信息，稍后给您同步。', meta: '2.1w人使用', theme: '职场', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#职场生存','#职场生存','适合职场发｜打工人必备'], text: '领导好，打扰了，想跟您同步一下项目的进度，您看今天方便抽空过一下吗？🙏', meta: '4.0w人使用', theme: '职场', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#职场生存','#职场生存','适合同事沟通｜高效表达'], text: '嗨，那个物料大概什么时候能给到呀？这边后续的流程在等米下锅啦，辛苦辛苦🤝', meta: '2.3w人使用', theme: '职场', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#职场生存','#职场生存','适合工作回复｜专业满分'], text: '这个想法很好，但结合目前的资源和排期，短期内落地可能存在风险，建议我们先跑通第一版再做迭代。', meta: '3.5w人使用', theme: '职场', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#职场生存','#职场生存','适合职场发｜打工人必备'], text: '了解了，那我们先不纠结之前的原因，当务之急是先把眼前的问题解决，后续我们再复盘优化流程。', meta: '3.5w人使用', theme: '职场', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合撩人发｜心动暴击'], text: '今天遇到一件很有趣的事，不知道为什么，第一个就想分享给你👀', meta: '2.8w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合表白发｜浪漫心动'], text: '刚刚路过一家咖啡店放了你喜欢的歌，感觉像是在替你跟我打招呼。', meta: '1.9w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合恋爱日常｜甜蜜互动'], text: '今天的晚霞特别温柔，如果你也在就好了🌅', meta: '3.8w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合撩人发｜心动暴击'], text: '怎么感觉一天没见，你又变好看了？💕', meta: '2.1w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合表白发｜浪漫心动'], text: '没什么特别的事，就是突然觉得，有你在身边真好。', meta: '4.0w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱撩人','#恋爱撩人','适合恋爱日常｜甜蜜互动'], text: '你的专属充电宝已上线，需要抱抱来恢复电量吗？🧸', meta: '3.8w人使用', theme: '恋爱', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合反击发｜优雅毒舌'], text: '您的建议非常有启发性，不过结合实际情况，我们还是按原计划推进吧🙂', meta: '3.2w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合怼人发｜笑着伤害'], text: '既然您这么专业，那这个重任交给您来主导一定能大放异彩，我就不班门弄斧了🌹', meta: '3.5w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合社交发｜高级讽刺'], text: '您说的都对，毕竟在您的认知范围内，这已经是极限了👍', meta: '3.5w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合反击发｜优雅毒舌'], text: '这么会抬杠，去工地干活一定是一把好手吧？☕️', meta: '2.3w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合怼人发｜笑着伤害'], text: '好的呢，您的意见我已经截图保存了，有空一定反复拜读🙂', meta: '3.2w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#优雅怼人','#优雅怼人','适合社交发｜高级讽刺'], text: '哇哦，原来你是这么想的呀，真是让人大开眼界呢👏', meta: '3.8w人使用', theme: '怼人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合敷衍回复｜精神状态'], text: '啊对对对，你说的都对，我这就去火星种土豆。', meta: '1.9w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合摸鱼发｜灵魂乱回'], text: '收到，但我现在的精神状态不适合回复人类语言。', meta: '1.9w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合日常发｜疯癫文学'], text: '不好意思，你触发了我的防御机制，我现在是一棵只会光合作用的绿萝。', meta: '3.5w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合敷衍回复｜精神状态'], text: '喵呜——呜呜——（你的消息被猫踩坏了，请重新输入或直接注销账号）。', meta: '3.2w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合摸鱼发｜灵魂乱回'], text: '别催了，我正在教我的扫地机器人跳华尔兹，它步子还没踩稳。', meta: '1.9w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#已读乱回','#已读乱回','适合日常发｜疯癫文学'], text: '我正在和流星雨协商降落地点，暂时没空处理地球上的琐事。', meta: '2.3w人使用', theme: '乱回', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#打工人文学','#打工人文学','适合上班发｜吗喽日记'], text: '私密马赛，吗喽这就去改。', meta: '4.0w人使用', theme: '打工人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#打工人文学','#打工人文学','适合摸鱼发｜打工人嘴替'], text: '老板，别看我坐在这里，其实我的灵魂已经在峨眉山抢游客奶茶了。', meta: '4.0w人使用', theme: '打工人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#打工人文学','#打工人文学','适合工作日发｜社畜共鸣'], text: '别催了，吗喽的手速已经快到产生残影了，再快就要进化成闪电侠了（并不想）。', meta: '3.8w人使用', theme: '打工人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#打工人文学','#打工人文学','适合上班发｜吗喽日记'], text: '你好，该产品经理已在“改稿”与“跑路”之间选择了“原地发疯”。请勿拍打喂食。', meta: '2.5w人使用', theme: '打工人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#打工人文学','#打工人文学','适合摸鱼发｜打工人嘴替'], text: '新增需求请排队。第一位请先教我怎么瞬间移动，第二位请帮我给太阳系贴个膜，第三位再谈你的功能。', meta: '3.0w人使用', theme: '打工人', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#发疯文学','#发疯文学','适合emo时发｜精神状态'], text: '我的精神状态：( ᵒ̴̶̷̥́ ᵒ̴̶̷̣̥̀ ) -> (ง •̀•́)ง -> ( ╯-_-)╯┴—┴ -> ( 🛌 )', meta: '2.3w人使用', theme: '发疯', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#发疯文学','#发疯文学','适合崩溃发｜情绪出口'], text: '哪有成年人是不疯的？没疯的都是在硬撑！哈！哈哈！哈哈哈哈！', meta: '3.5w人使用', theme: '发疯', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#发疯文学','#发疯文学','适合深夜发｜灵魂发疯'], text: '（尖叫）（扭曲）（阴暗地爬行）（翻滚）', meta: '2.3w人使用', theme: '发疯', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#发疯文学','#发疯文学','适合emo时发｜精神状态'], text: '（变成一只猴子）（荡树藤）（抢游客香蕉）（发出噢噢噢的叫声）🐒🍌', meta: '2.3w人使用', theme: '发疯', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#发疯文学','#发疯文学','适合崩溃发｜情绪出口'], text: '哈哈哈哈哈有什么大不了的！大不了我就去街上要饭！🥣（拿起破碗）（眼神清澈）', meta: '2.1w人使用', theme: '发疯', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#显眼包文案','#显眼包文案','适合搞笑发｜全场焦点'], text: '今天又是元气满满的一天（破音）！', meta: '3.8w人使用', theme: '显眼包', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#显眼包文案','#显眼包文案','适合日常发｜显眼包本人'], text: '叼玫瑰花出现）晚上好我的女主🤴 不知道你是否🌹……（被刺到嘴）（匆匆离场）🕺v', meta: '2.8w人使用', theme: '显眼包', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#显眼包文案','#显眼包文案','适合社交发｜快乐源泉'], text: '叽里咕噜说啥呢 给我两百块', meta: '2.1w人使用', theme: '显眼包', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#显眼包文案','#显眼包文案','适合搞笑发｜全场焦点'], text: '我是一台挖掘机，我要开始工作了：哇绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝绝~', meta: '4.0w人使用', theme: '显眼包', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#显眼包文案','#显眼包文案','适合日常发｜显眼包本人'], text: '也没什么才艺，就给大家表演一个美女下凡吧。☁️💃', meta: '3.0w人使用', theme: '显眼包', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合配图发圈｜日系排版'], text: '✍🏻️去爱具体又普通的日子✧>ᴗo⸝⸝🧀', meta: '3.5w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合记录日常｜精致生活'], text: '祝我们永远都能抓住那些很好的瞬间⋆ ‧₊˚ 🍨', meta: '1.9w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合分享发｜PLOG美学'], text: '交换春天 | plog：呼吸洄游、我们被春天淹没。', meta: '2.5w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合配图发圈｜日系排版'], text: '♬ ˣ小小日子…!!!🥛', meta: '3.0w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合记录日常｜精致生活'], text: '₊⁺ ꒰১ ♡ ໒꒱ ⁺₊', meta: '3.5w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合分享发｜PLOG美学'], text: '“ 世界是混沌的 先爱自己🫶🏻', meta: '3.2w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#PLOG文案','#PLOG文案','适合配图发圈｜日系排版'], text: '如果幸福是live☆₊⁺🐈🧁🥡', meta: '1.9w人使用', theme: 'PLOG', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合配图发｜ins风格'], text: '🎞"希望片刻变永久"', meta: '2.1w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合发圈｜氛围感拉满'], text: '爱是人生的止痛药💊•°*', meta: '2.1w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合日签发｜精致短句'], text: '♡ 𓂂幸福小记💭🩰🥛', meta: '3.8w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合配图发｜ins风格'], text: '🌤 ◡̈°️生活是个动词', meta: '3.8w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合发圈｜氛围感拉满'], text: '˗ ˏˋ♥ˎˊ˗ 发送开心', meta: '3.0w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合日签发｜精致短句'], text: 'ins里ins气 🌷', meta: '3.2w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合配图发｜ins风格'], text: '🍵oh周末万岁🍈 ₊⁺ \'͜\' ₊⁺', meta: '3.5w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合发圈｜氛围感拉满'], text: '🍛•ᴗ•🥄生活打不败一个大口吃饭的人', meta: '2.5w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#ins金句','#ins金句','适合日签发｜精致短句'], text: '🎀››朋友圈⁺⁹⁹⁹', meta: '2.1w人使用', theme: 'ins', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '❖ 🥯｜嘀⇢早安卡', meta: '3.0w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '┊ ᴳᵒᵒᵈ ᵐᵒʳⁿⁱⁿᵍ 🔅 ☼', meta: '2.3w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合打卡发｜每日一句'], text: '见者有份，好事发生=͟͟͞♡ ︎', meta: '3.2w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '❥❥❥ ᴳᴼᴼᴰ ᴹᴼᴿᴺᴵᴺᴳ ❥❥❥', meta: '3.8w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '今日的馈赠👩‍❤️‍💋‍👩', meta: '3.5w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合打卡发｜每日一句'], text: '是温柔的好天气✌︎˶╹ꇴ╹˶✌︎', meta: '1.9w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '和慢慢变好的自己ღ💌ღ', meta: '2.1w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '◡̈🌿🔅𝐀𝐥𝐥 𝐢𝐬 𝐰𝐞𝐥𝐥 ⌇ ༘ 𖠚ᐝ', meta: '2.3w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合打卡发｜每日一句'], text: '“养好自己的磁场，好事自然发生❁ ”', meta: '3.2w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '꙳🌷ᰔᩚᯓ 𝐏𝐡𝐨𝐭𝐨 ˂🧺 ‧˚', meta: '3.0w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '“没有情绪的日子，就是很幸福 🫶🏻”', meta: '2.1w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合打卡发｜每日一句'], text: 'ᵕ̈🍑🄷🄴🄻🄻🄾 ◡̈🌿 ✌︎ ʺ̤', meta: '3.0w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '“日子零零碎碎 ， 生活满满当当૮˶ᵔᵕᵔ˶ა', meta: '2.1w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '正在缓存快乐：■■■■■□□□ 99%🎬.ᐟ.ᐟ', meta: '2.1w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合打卡发｜每日一句'], text: '每一天，都是改写人生的机会！', meta: '2.8w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合早安发｜金句日签'], text: '我的生命是一万次春和景明~', meta: '1.9w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#每日金句','#每日金句','适合发圈｜能量充电'], text: '山有顶峰，湖有彼岸，在人生漫漫长途中，万物皆有回转，当我们觉得余味苦涩，请你相信，一切终有回甘。', meta: '3.0w人使用', theme: '金句', src: 'lib', timeFit: ['morning'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合日常发｜笑到头掉'], text: '上了一天班，钱虽然没挣着，倒也没白干，起码累着了~', meta: '2.1w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合聊天发｜梗王认证'], text: '本来挺想你的，后来玩手机忘记了......', meta: '2.5w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合发圈｜快乐传染'], text: 'ᶠᵃᵗ ᶠᵃᵗ ᶠᵃᵗ🐔🦆🐟🦞', meta: '3.8w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合日常发｜笑到头掉'], text: '我最喜欢小动物了，比如：\n炸鸡，烤鸭，水煮鱼，麻辣小龙虾……', meta: '3.8w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合聊天发｜梗王认证'], text: '𝐋𝐢𝐟𝐞🧋', meta: '2.1w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合发圈｜快乐传染'], text: '“七情六欲，光剩下食欲了', meta: '4.0w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合日常发｜笑到头掉'], text: '在少吃和不吃之间，我选择了不少吃”', meta: '2.5w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合聊天发｜梗王认证'], text: '𝕕𝕒𝕚𝕝𝕪 🍽', meta: '3.5w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合发圈｜快乐传染'], text: '“一定要身材好吗，我胃口好不行吗”', meta: '4.0w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合日常发｜笑到头掉'], text: '➵ 𝖇𝖎𝖚𝖇𝖎𝖚 🏹', meta: '1.9w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#有梗文案','#有梗文案','适合聊天发｜梗王认证'], text: '“打败我的从来不是生活，是生活费”', meta: '4.0w人使用', theme: '有梗', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合晒美食发｜干饭宣言'], text: 'ˁ῁̬ˀ~𓎩🥢', meta: '1.9w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合探店发｜吃货日记'], text: '“小肚，小肚，我在🙋🏻‍♀️”', meta: '3.0w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合朋友圈发｜味蕾暴击'], text: 'ꕀ美食記🍤🍖', meta: '3.8w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合晒美食发｜干饭宣言'], text: '"日子不紧不慢 每天好好吃饭"', meta: '3.8w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合探店发｜吃货日记'], text: '🍰༿叮🔔！', meta: '3.2w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合朋友圈发｜味蕾暴击'], text: '双下巴续费成功”🥢', meta: '4.0w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合晒美食发｜干饭宣言'], text: '𝙨𝙝𝙖𝙧𝙚今天炫的漂亮饭𐂐 ✌︎\' ֊\'', meta: '2.1w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合探店发｜吃货日记'], text: '人生苦短，再来一碗🍜', meta: '4.0w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合朋友圈发｜味蕾暴击'], text: '人间大事，吃喝二字', meta: '2.3w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合晒美食发｜干饭宣言'], text: '只要我吃得够快，体重就追不上我', meta: '2.8w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合探店发｜吃货日记'], text: '俗话讲："餐餐不重样 人生才敞亮"🥟🍥', meta: '3.0w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#美食配文','#美食配文','适合朋友圈发｜味蕾暴击'], text: '干饭积极分子🍚꒳ᵒ꒳', meta: '1.9w人使用', theme: '美食', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '✌︎ 被好风景收买  ✿ 🏞️ 🚁', meta: '2.1w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合出游发｜风景收买'], text: '🚗 𓐃 𝐇𝐨𝐨𝐨𝐨𝐨𝐥𝐢𝐝𝐚𝐲', meta: '3.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合假期发｜在路上'], text: '出门 “ㅁ슴 ㅁ슴 ㅁ슴 ㅁ슴 ㅁ슴 ”啦', meta: '3.0w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '答案在路上𝐠𝐨 𝐠𝐨 𝐠𝐨👣', meta: '3.5w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合出游发｜风景收买'], text: '🛵💨出门6̐̈达6̐̈达', meta: '2.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合假期发｜在路上'], text: '把大大的河山装进小小的手机📸 ᴷᴬᒼᴬ', meta: '3.5w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '♡𝕓𝕖 𝕙𝕒𝕡𝕡𝕪 ʚ🍒ིྀɞ🔆', meta: '2.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合出游发｜风景收买'], text: '此时情绪此时天，做个无事小神仙', meta: '3.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合假期发｜在路上'], text: '𝐇𝐨𝐨 ！⸝⸝⸝Let\'s go~', meta: '2.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '🚅 蓄谋已久，不如说走就走🧳', meta: '2.5w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合出游发｜风景收买'], text: '🚂﹏𝐧𝐢𝐜𝐞 𝐭𝐫𝐢𝐩', meta: '3.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合假期发｜在路上'], text: '山高路远，看世界，也找自己🌍', meta: '2.5w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '𝗘𝗻𝗷𝗼𝘆 𝗟𝗶𝗳𝗲🍩॑ᗜ॑🍩', meta: '3.5w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合出游发｜风景收买'], text: '一二三，剪刀手，看镜头📸', meta: '2.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合假期发｜在路上'], text: '在生活，在记录，在珍惜👧🏻', meta: '2.1w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#旅行配文','#旅行配文','适合旅行发｜诗与远方'], text: '“ʕ•̫͡•ོʔ周末刷个存在感”', meta: '3.8w人使用', theme: '旅行', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合秀恩爱发｜甜蜜日常'], text: '♡.:.+*💗:+｡♬︎♡', meta: '2.8w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合恋爱发｜幸福记录'], text: 'ᨒ幸福没有标准答案🎀ᐝ', meta: '3.2w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合约会发｜心动瞬间'], text: '𝑴𝒚 𝒃𝒃  💞', meta: '4.0w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合秀恩爱发｜甜蜜日常'], text: '是朋友 是好朋友 是男朋友📸', meta: '3.8w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合恋爱发｜幸福记录'], text: '⁺₊ଘ🐰ིྀଓ約會日.ᐟ.ᐟ.ᐟ', meta: '3.0w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合约会发｜心动瞬间'], text: '⁺₊♥̶₊⁺·插播一条恋爱资讯', meta: '2.5w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合秀恩爱发｜甜蜜日常'], text: 'Loveᵧₒᵤ♡+₁₀₀', meta: '2.8w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合恋爱发｜幸福记录'], text: '“幸福不在别处 当下即是全部”', meta: '4.0w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合约会发｜心动瞬间'], text: '满「♥」欢「囍」', meta: '4.0w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合秀恩爱发｜甜蜜日常'], text: '𝘓𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘰𝘷𝘦 超久的爱给你💗⁺¹ºº', meta: '2.3w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合恋爱发｜幸福记录'], text: '你朝我走来的路途，温柔了万般光景', meta: '2.3w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合约会发｜心动瞬间'], text: '遇见既是上上签，纵使结局不如意', meta: '2.5w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#恋爱日常','#恋爱日常','适合秀恩爱发｜甜蜜日常'], text: '零碎的岛屿，找到了她的海', meta: '3.0w人使用', theme: '恋爱日常', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合晒娃发｜成长记录'], text: 'Oo📸 ˎˊ˗ ☺︎𝐘𝐞𝐞𝐞𝐞 ✌︎ ʺ̤用镜头偷走你无忧无虑的每一秒⧼👼🏻🍼🧺 ⧽', meta: '3.8w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合亲子发｜温馨日常'], text: '遛娃•𝗗𝗮𝗶𝗹𝘆︴📝', meta: '1.9w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合遛娃发｜萌娃日记'], text: '🔖🛴tutu～💨', meta: '4.0w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合晒娃发｜成长记录'], text: '好好陪伴  慢慢長大  💚', meta: '3.2w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合亲子发｜温馨日常'], text: '🎐𝘄𝗶𝘀𝗵 𝗮𝗹𝗹 🀅🀅🀅💛', meta: '3.5w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合遛娃发｜萌娃日记'], text: '“生活简简单单，带娃乐趣满满”😘', meta: '1.9w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合晒娃发｜成长记录'], text: '🤌🏻抓一个不睡觉的小朋友送去🌕月球罚站', meta: '3.0w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合亲子发｜温馨日常'], text: '在感受 在记录 在珍惜·👧🏻', meta: '3.5w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合遛娃发｜萌娃日记'], text: '🧡𝗺𝗼𝗿𝗻𝗶𝗻𝗴 𝘆𝗮 ☺︎', meta: '4.0w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合晒娃发｜成长记录'], text: '“元气满满 遛娃的一天”', meta: '2.8w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合亲子发｜温馨日常'], text: '镜头后的生活，拍着拍着就长大了', meta: '3.2w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合遛娃发｜萌娃日记'], text: '晒晒小朋友的快乐 ʚ🧸ྀིɞ', meta: '3.8w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#萌娃配文','#萌娃配文','适合晒娃发｜成长记录'], text: '总想把世界上最好的都给你 却发现世界上最好的就是你', meta: '2.8w人使用', theme: '萌娃', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '🍰 Hi༓生⃕日⃕快⃕乐⃕༓ ♪♬', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: '㊗我發财💰被爱❤️好運常在🍬', meta: '4.0w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '💜ʜᵃᵖᵖᵞ ʙⁱʳᵗʰᵈᵃᵞ ♪♬', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '今天是没有流星也可以许愿的日子', meta: '2.3w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: '𝐻𝐵𝐷 𝑇𝑂 𝑀𝐸 是纪念和妈妈相遇的日子', meta: '3.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '正在播放《祝你生日快乐🎂》', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '━━━●──── 5:20 ⇆', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: 'ㅤ◁ ㅤㅤ❚❚ ㅤㅤ▷ ㅤㅤ↻', meta: '3.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '愿你❤得偿所愿 平安喜乐', meta: '3.2w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '♡ʜᴀᴘᴘʏ ʙɪʀᴛʜᴅᴀʏ ᴛᴏ Yᴏᴜ', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: '₍ᐢ •͈ ◡ •͈ ᐢ₎🎀', meta: '2.5w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '𝐇𝐚𝐩𝐩𝐲 𝐁-𝐃𝐚𝐲', meta: '3.2w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '＊⌒(๑•ᴗ•๑)⌒＊', meta: '3.2w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: '愿你永远闪闪发光✨', meta: '1.9w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '🐸🐸🐸🐸🐸', meta: '1.9w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '新岁新剧本 𝙼𝚢 𝙱𝚒𝚛𝚝𝚑𝚍𝚊𝚢✨', meta: '3.0w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合祝福发｜创意贺卡'], text: '🌈𝙃𝙖𝙥𝙥𝙮 𝘽𝙞𝙧𝙩𝙝𝙙𝙖𝙮✨', meta: '2.8w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合生日发｜浪漫祝愿'], text: '🐰🍰我的宝贝生日快乐🍓🐣', meta: '1.9w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#生日祝福','#生日祝福','适合庆生发｜仪式感满满'], text: '把生活调成喜欢的频率，把自己放在舒服的位置。愿新岁依旧松弛又高级。', meta: '2.1w人使用', theme: '生日祝福', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '𝐻𝑒𝑦 𝑆𝑝𝑟𝑖𝑛𝑔 ᯓ🌷', meta: '4.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '“ 春暖花开 ʕ ᵔᴥᵔ ʔ为你而来♡ ”', meta: '2.5w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春游发｜春光无限'], text: '🌼♡ 𝙎𝙥𝙧𝙞𝙣𝙜🍃', meta: '1.9w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '“ 油˘˘菜˘˘花˘˘开˘˘了˘˘ ”', meta: '2.5w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '(｡•ᴗ-)_✐.ɴɪᴄᴇ ᴅᴀʏ 〰🌸', meta: '2.5w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春游发｜春光无限'], text: '“ 🏖-收录春天的小美好* દ ᵕ̈ ૩ ! ”', meta: '3.2w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '🌺˚̣̣ 𝐒𝐩𝐫𝐢𝐧𝐠 𝐢𝐬 𝐜𝐨𝐦𝐢𝐧𝐠 ✿', meta: '2.3w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '“ 季节轮换，我们也要有新的故事 ”', meta: '4.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春游发｜春光无限'], text: '🫧 \'͜\'春·日𝗦𝗽𝗿𝗶𝗻𝗴🌸', meta: '4.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '🍊𝙎𝙥𝙧𝙞𝙣𝙜日常🖼️', meta: '3.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '🌷🌳春日野餐🧺 🍱', meta: '4.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春游发｜春光无限'], text: '🚎 𓏽 🌿𓂃 𓈒𓏸𝗦𝗽𝗿𝗶𝗻𝗴◡̈°', meta: '3.8w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '“ 出门溜达 赴一場春日約💐 ”', meta: '4.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '春日序曲🎧 ı||ııı||ı|', meta: '2.8w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春游发｜春光无限'], text: '🎬：点击进入春天🌿', meta: '3.5w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合春天发圈｜春日限定'], text: '花开成景，花落成诗。站在樱花树下，接住了整个春天~', meta: '3.0w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#春日碎片','#春日碎片','适合踏青发｜花开好时节'], text: '我在阳光下往返于春天', meta: '2.8w人使用', theme: '春日', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '⋱✮⋰💗⋰ 🩰⋱✮⋰', meta: '2.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '🌸 ⊹꙳ ✈️ ⊹꙳💓', meta: '3.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '🍅𝑇𝑜𝑚𝑎𝑡𝑜ミ₊˚', meta: '3.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '. ݁⋆ 𝙚𝙚𝙚𝙚𝙖𝙩!🍿˙⟡ ˖', meta: '2.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '𝕡𝕚𝕟𝕜*🐽｡♡', meta: '1.9w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '🌻 ◝ ☀️ ִֶָ ꩜ʾ', meta: '4.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '⋄(:̲̅:̲̅:̲̅[̲̅ :💛ྀི 💛ྀི: ]̲̅:̲̅:̲̅:̲̅)⋄', meta: '2.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '⁺◟ 🍋🥛ꊞ 🏸❕', meta: '2.5w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '𓈃🍽️ 🐱˙ỏ˙ ⟡', meta: '1.9w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '.* ☾ ᯓ. 🎀🐰 ♡｡。₊⁺', meta: '3.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '*ﾟ🎀 + .*˖ 𖦹 💒 🎀 🪄', meta: '3.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '🎟˚⟢𝑯𝒂𝒗𝒆 𝒂 𝒏𝒊𝒄𝒆 𝒅𝒂𝒚𓈒✡︎ 🛳️₊', meta: '3.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '*｡💓♡𝕓𝕖 𝕙𝕒𝕡𝕡𝕪🫧🐟', meta: '2.3w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '🐳♡ͥ ♡ͦ ♡ͮ ♡ͤ🐋𓈒𖧷', meta: '2.5w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '* 💙♡𝕓𝕖 𝕙𝕒𝕡𝕡𝕪', meta: '2.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '🍓⋆𝓱𝓪𝓹𝓹𝔂❤️〰︎₂₀₂₆', meta: '1.9w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '𐃆🌟❤️⋆*🌹🎇𓂂', meta: '3.2w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '࣪🍐 𝑊𝑜𝑛𝑑𝑒𝑟𝑓𝑢𝑙＂₊🧢˚ ✧', meta: '3.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '｡☘️𖦹°‧🩲★ ◡̈🩴⁺ 🌴', meta: '3.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '🐸♡︎🎐≀✧🍈\'•🥝', meta: '2.3w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: 'ꕀ🐟`·🦖 🫧 .꒱  ⋆⁺', meta: '2.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合配图发｜梦幻排版'], text: '🧊⋆⁺ ૮•ᴥ• ა 🍦  ݁⋆', meta: '3.0w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合发圈｜emoji美学'], text: '𐙚‧₊°🌐✩🌝₊°🌦⊹♡', meta: '3.8w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#梦幻emoji','#梦幻emoji','适合日常发｜创意符号'], text: '🌙 ɢᴏᴏᴅ ɴɪɢʜᴛ𓂂𓏸🛋', meta: '3.5w人使用', theme: 'emoji', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: '「一切·順利」𝐘𝐞𝐞𝐞𝐞 ✌︎ ʺ̤', meta: '3.2w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '生活需有两朵fa，有钱fa和随便fa🌷', meta: '4.0w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '˗ˋˏ 发财💰ˎˊ˗', meta: '3.2w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: '🛸“ꈍ◡ꈍ ☾˚‧º·不管黄金白金，只想日进斗金', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '˗ ̗̀♥̖́-💵⁺⁹⁹⁹', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '钱辈 今年也请多多指教', meta: '2.1w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: '⚆ɞ⚆💞ʜᴀᴘᴘʏ ⁺¹⁰⁰‍', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '从磁场上讲，人只有快乐，运气才会变好。', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '👧🏻ˎˊ˗𝐨𝐨𝐨𝐲𝐞', meta: '1.9w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: '肆意生长，自在如风💜', meta: '3.0w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '🀅🀅🀅⁺⁹⁹⁹', meta: '2.8w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '兜兜有🍭，袋袋有💰', meta: '1.9w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: 'ᡣ𐭩 ⑉ ℙ𝕝𝕠𝕘⤾·˚', meta: '4.0w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '上上签，長安寧，久安康🐋', meta: '3.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '🌞💴 ⁺¹⁰⁰', meta: '3.2w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合新年发圈｜好运加持'], text: '人生目标很直白：赚钱、快乐、闪闪发光。', meta: '3.2w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合早安发｜接好运'], text: '我拥抱万物，万物也拥抱我', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#好运金句','#好运金句','适合发圈｜旺自己'], text: '日日是好日，事事是好事', meta: '2.5w人使用', theme: '好运', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合星座发｜灵魂剖析'], text: '白羊座♈️：明知冲动是魔鬼 却还想为你冒险一次', meta: '4.0w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合发圈｜星座共鸣'], text: '金牛座♉️：攒够失望的硬币 终于能买一张离开的车票', meta: '4.0w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合日常发｜星座属性'], text: '双子座♊️：用99+的废话 掩盖未发送的SOS', meta: '2.8w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合星座发｜灵魂剖析'], text: '巨蟹座♋️：收藏回忆成瘾 可是回忆不包售后', meta: '3.0w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合发圈｜星座共鸣'], text: '狮子座♌️：舞台的聚光灯 找不到观众席的泪', meta: '2.3w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合日常发｜星座属性'], text: '处女座♍️：看清所有破绽 还假装没有裂痕', meta: '3.0w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合星座发｜灵魂剖析'], text: '天秤座♎️：在万人狂欢的直播间 做情绪掉线的主播', meta: '4.0w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合发圈｜星座共鸣'], text: '天蝎座♏️：爱是深渊的回响 你是峡谷的旅人', meta: '2.1w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合日常发｜星座属性'], text: '射手座♐️：追风的人 最后困在等你的路口', meta: '2.1w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合星座发｜灵魂剖析'], text: '摩羯座♑️：计划了十年 你却只要一个瞬间', meta: '3.2w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合发圈｜星座共鸣'], text: '水瓶座♒️：不是满格的WIFI连不上 是早已更改密码', meta: '1.9w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#星座文案','#星座文案','适合日常发｜星座属性'], text: '双鱼座♓️：在自建的童话镇 客串爱哭的群众', meta: '2.3w人使用', theme: '星座', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '大剑哥/ENFJ：世界需要有趣的拼图\nThe world needs fun puzzles.', meta: '2.3w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合社交发｜人格标签'], text: '快乐小狗/ENFP：地球需要毛茸茸的小狗\nEarth needs furry puppies.', meta: '3.2w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合自我介绍｜性格名片'], text: '小蝴蝶/INFP：我天生追随热爱\nI am born to follow my passions.', meta: '1.9w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '绿老头/INFJ：想象那些细腻而微妙的幸福感\nImagine those delicate and subtle feelings of happiness.', meta: '3.8w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合社交发｜人格标签'], text: '大姐头/ENTJ：不要期待，直接开干\nDon\'t expect anything, just get started.', meta: '3.0w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合自我介绍｜性格名片'], text: '紫老头/INTJ：我航行在深思熟虑的旅程中\nI am sailing on a thoughtful journey.', meta: '2.5w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '药水姐/INTP：灵感需要时间和耐心\nInspiration requires time and patience.', meta: '4.0w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合社交发｜人格标签'], text: '骨折眉毛/ENTP：期待积极地应对挑战\nLooking forward to actively meeting the challenges', meta: '2.1w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合自我介绍｜性格名片'], text: '锤子姐/ESFP：充满活力的灵魂在寻找快乐\nA vibrant soul is searching for happiness.', meta: '4.0w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '男妈妈/ESFJ：给予支持，传递快乐\nOffer support, spread happiness.', meta: '2.1w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合社交发｜人格标签'], text: '小画家/ISFP：尽情享受轻松的感受\nEnjoy the feeling of relaxation.', meta: '2.3w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合自我介绍｜性格名片'], text: '小护士/ISFJ：在寒冬发现萌芽的希望\nDiscovering budding hope in the dead of winter.', meta: '3.5w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '蓝老头/ISTJ：独立的灵魂，恣意生长\nAn independent soul, growing freely.', meta: '4.0w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合社交发｜人格标签'], text: '电钻哥/ISTP：独立解决方案优先\nIndependent solutions preferred.', meta: '2.5w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合自我介绍｜性格名片'], text: '尺子姐/ESTJ：享受精致而变革性的旅程\nEnjoy a refined and transformative journey.', meta: '2.3w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true },
+  { tags: ['#MBTI语录','#mbti专属语录','适合性格发｜MBTI共鸣'], text: '墨镜哥/ESTP：勇敢的人先享受世界\nBrave people enjoy the world first.', meta: '2.3w人使用', theme: 'MBTI', src: 'lib', timeFit: ['any'], _isCommonLib: true }
+];
 // ========== 基础时间 ==========
 const now = new Date(), hour = now.getHours(), minute = now.getMinutes(), month = now.getMonth() + 1, day = now.getDate();
 const weekDay = now.getDay();
@@ -1029,38 +1332,73 @@ function goHome() {
 
 // ========== 推荐版块数据 ==========
 const HOT_TOPICS = [
-  { title: '#罗翔金句', heat: '8.2w赞', matchTags: ['#罗翔','#法律'], matchThemes: ['罗翔','法律','正义','认知','哲理'], matchText: ['罗翔'], src: 'xhs', timeFit: ['any'] },
-  { title: '#罗振宇语录', heat: '5.1w赞', matchTags: ['#罗振宇','#得到'], matchThemes: ['罗振宇','终身学习','认知'], matchText: ['罗振宇'], src: 'weibo', timeFit: ['morning','afternoon','workday'] },
-  { title: '#哲思语录', heat: '6.7w赞', matchTags: ['#哲思','#深度思考'], matchThemes: ['哲思','深度思考','格局'], matchText: ['哲思'], src: 'xhs', timeFit: ['evening','latenight'] },
-  { title: '#名人名言', heat: '4.9w赞', matchTags: ['#名人名言','#金句'], matchThemes: ['名人','名言','智慧'], matchText: ['名人'], src: 'ted', timeFit: ['any'] },
-  { title: '#读书笔记', heat: '5.5w赞', matchTags: ['#读书笔记','#读书感悟'], matchThemes: ['读书','笔记','感悟','阅读'], matchText: ['读书'], src: 'xhs', timeFit: ['evening','weekend','latenight'] },
-  { title: '#认知升级', heat: '4.3w赞', matchTags: ['#认知升级','#思维'], matchThemes: ['认知','底层逻辑','深度思考'], matchText: ['认知'], src: 'douyin', timeFit: ['morning','afternoon','workday'] },
-  { title: '#自律语录', heat: '7.1w赞', matchTags: ['#自律','#成长'], matchThemes: ['自律','成长','坚持','逆商'], matchText: ['自律'], src: 'xhs', timeFit: ['morning','daytime'] },
-  { title: '#TED金句', heat: '3.8w赞', matchTags: ['#TED','#演讲'], matchThemes: ['TED','演讲','思维'], matchText: ['TED'], src: 'ted', timeFit: ['any'] },
-  { title: '#颜文字', heat: '2.6w赞', matchTags: ['#颜文字','#emoji'], matchThemes: ['颜文字','创意'], matchText: ['颜文字'], src: 'xhs', timeFit: ['any'] },
-  { title: '#深夜emo', heat: '6.0w赞', matchTags: ['#emo','#伤感'], matchThemes: ['emo','伤感','深夜'], matchText: ['emo'], src: 'xhs', timeFit: ['latenight','evening'] },
-  { title: '#早安打卡', heat: '5.3w赞', matchTags: ['#早安','#元气'], matchThemes: ['早安','咖啡','元气'], matchText: ['早安'], src: 'xhs', timeFit: ['morning'] },
-  { title: '#打工人日常', heat: '7.5w赞', matchTags: ['#打工人','#职场'], matchThemes: ['打工人','职场','摸鱼'], matchText: ['打工'], src: 'weibo', timeFit: ['workday','daytime'] },
-  { title: '#周末快乐', heat: '4.8w赞', matchTags: ['#周末','#休闲'], matchThemes: ['周末','休闲','出游'], matchText: ['周末'], src: 'xhs', timeFit: ['weekend'] },
+  { title: '#高质量文案', heat: '12.5w赞', matchTags: ['#高质量文案','#金句'], matchThemes: ['高质量文案','金句','宝藏文案'], matchText: ['高质量','金句'], src: 'xhs', timeFit: ['any'] },
+  { title: '#朋友圈文案', heat: '10.8w赞', matchTags: ['#朋友圈文案','#发圈'], matchThemes: ['朋友圈文案','朋友圈'], matchText: ['朋友圈'], src: 'xhs', timeFit: ['any'] },
+  { title: '#人间清醒', heat: '9.6w赞', matchTags: ['#人间清醒','#格局'], matchThemes: ['人间清醒','格局','清醒'], matchText: ['清醒'], src: 'xhs', timeFit: ['any'] },
+  { title: '#影视剧台词', heat: '8.9w赞', matchTags: ['#影视剧台词','#经典台词'], matchThemes: ['影视剧台词','台词','经典语录'], matchText: ['台词','影视'], src: 'douyin', timeFit: ['evening','latenight'] },
+  { title: '#综艺金句', heat: '7.3w赞', matchTags: ['#综艺金句','#综艺'], matchThemes: ['综艺金句','综艺','搞笑'], matchText: ['综艺'], src: 'weibo', timeFit: ['evening','weekend'] },
+  { title: '#社会热点', heat: '8.2w赞', matchTags: ['#社会热点','#热门'], matchThemes: ['社会热点','热点','流行语'], matchText: ['热点'], src: 'weibo', timeFit: ['any'] },
+  { title: '#网络流行语', heat: '11.2w赞', matchTags: ['#网络流行语','#热梗'], matchThemes: ['网络流行语','热梗','年度热词'], matchText: ['流行语','热梗'], src: 'weibo', timeFit: ['any'] },
+  { title: '#TED金句', heat: '6.8w赞', matchTags: ['#TED','#演讲'], matchThemes: ['TED','演讲','名人演讲'], matchText: ['TED'], src: 'ted', timeFit: ['any'] },
+  { title: '#读书感悟', heat: '7.5w赞', matchTags: ['#读书感悟','#书摘'], matchThemes: ['读书感悟','书摘','读书'], matchText: ['读书'], src: 'xhs', timeFit: ['evening','weekend'] },
+  { title: '#人生感悟', heat: '8.1w赞', matchTags: ['#人生感悟','#深度思考'], matchThemes: ['人生感悟','深度思考','终身成长'], matchText: ['人生','感悟'], src: 'xhs', timeFit: ['evening','latenight'] },
+  { title: '#早安文案', heat: '9.3w赞', matchTags: ['#早安','#元气'], matchThemes: ['早安','元气','清晨'], matchText: ['早安'], src: 'xhs', timeFit: ['morning'] },
+  { title: '#晚安文案', heat: '8.7w赞', matchTags: ['#晚安','#治愈'], matchThemes: ['晚安','治愈','深夜'], matchText: ['晚安'], src: 'xhs', timeFit: ['latenight','evening'] },
+  { title: '#MBTI文案', heat: '7.9w赞', matchTags: ['#MBTI','#性格'], matchThemes: ['MBTI','INTJ','INFP','ENFP'], matchText: ['MBTI'], src: 'xhs', timeFit: ['any'] },
+  { title: '#十二星座文案', heat: '6.5w赞', matchTags: ['#星座','#星座文案'], matchThemes: ['星座','白羊座','双鱼座','天蝎座'], matchText: ['星座'], src: 'xhs', timeFit: ['any'] },
+  { title: '#好运文案', heat: '7.6w赞', matchTags: ['#好运','#旺自己'], matchThemes: ['好运','好运金句','旺自己文案'], matchText: ['好运','旺自己'], src: 'xhs', timeFit: ['morning','any'] },
+  { title: '#表白文案', heat: '6.2w赞', matchTags: ['#表白','#恋爱'], matchThemes: ['表白','恋爱','甜蜜','表达想念'], matchText: ['表白','想念'], src: 'xhs', timeFit: ['evening','latenight'] },
+  { title: '#彩虹屁', heat: '5.8w赞', matchTags: ['#彩虹屁','#夸夸'], matchThemes: ['彩虹屁','夸夸','高情商感谢'], matchText: ['彩虹屁','夸夸'], src: 'xhs', timeFit: ['any'] },
+  { title: '#优雅怼人', heat: '6.9w赞', matchTags: ['#优雅怼人','#高情商'], matchThemes: ['优雅怼人','怼人','反击'], matchText: ['怼人'], src: 'weibo', timeFit: ['any'] },
+  { title: '#INS文案', heat: '5.4w赞', matchTags: ['#INS文案','#PLOG'], matchThemes: ['INS文案','PLOG文案','日签文案'], matchText: ['INS','PLOG'], src: 'xhs', timeFit: ['any'] },
+  { title: '#旅行文案', heat: '7.2w赞', matchTags: ['#旅行文案','#旅行随感'], matchThemes: ['旅行文案','旅行随感','诗与远方'], matchText: ['旅行'], src: 'xhs', timeFit: ['weekend','daytime'] },
+  { title: '#晒美食文案', heat: '6.1w赞', matchTags: ['#美食文案','#干饭人'], matchThemes: ['晒美食文案','美食','干饭人'], matchText: ['美食'], src: 'xhs', timeFit: ['noon','evening'] },
+  { title: '#明星语录', heat: '5.7w赞', matchTags: ['#明星语录','#偶像'], matchThemes: ['明星语录','偶像','语录'], matchText: ['明星'], src: 'weibo', timeFit: ['any'] },
+  { title: '#顶级文笔', heat: '8.4w赞', matchTags: ['#顶级文笔','#文字控'], matchThemes: ['顶级文笔','文字控','扎心语录'], matchText: ['文笔','文字控'], src: 'xhs', timeFit: ['evening','latenight'] },
+  { title: '#emoji颜文字', heat: '4.6w赞', matchTags: ['#颜文字','#emoji'], matchThemes: ['emoji颜文字','颜文字','创意'], matchText: ['颜文字','emoji'], src: 'xhs', timeFit: ['any'] },
+  { title: '#春日碎片', heat: '5.1w赞', matchTags: ['#春日碎片','#日常'], matchThemes: ['春日碎片','日常','碎片'], matchText: ['春日','碎片'], src: 'xhs', timeFit: ['daytime','weekend'] },
+  { title: '#生日祝福', heat: '5.9w赞', matchTags: ['#生日祝福','#祝福'], matchThemes: ['生日祝福','祝福','生日'], matchText: ['生日','祝福'], src: 'xhs', timeFit: ['any'] },
+  { title: '#安慰鼓励', heat: '6.3w赞', matchTags: ['#安慰鼓励','#治愈'], matchThemes: ['安慰鼓励','治愈','温暖'], matchText: ['安慰','鼓励'], src: 'xhs', timeFit: ['any'] },
+  { title: '#深度思考', heat: '7.0w赞', matchTags: ['#深度思考','#底层逻辑'], matchThemes: ['深度思考','底层逻辑','思维方式'], matchText: ['深度','思考'], src: 'xhs', timeFit: ['evening','latenight'] },
+  { title: '#经典语录', heat: '9.1w赞', matchTags: ['#经典语录','#金句'], matchThemes: ['经典语录','金句','名言'], matchText: ['经典','语录'], src: 'xhs', timeFit: ['any'] },
+  { title: '#晒娃文案', heat: '4.8w赞', matchTags: ['#晒娃','#亲子'], matchThemes: ['晒娃文案','亲子','宝宝'], matchText: ['晒娃'], src: 'xhs', timeFit: ['any'] },
 ];
 
 const REC_CATEGORIES = [
-  { icon: '🧠', label: '哲思', matchTags: ['#哲思','#深度思考'], matchThemes: ['哲思','深度思考','格局'], timeFit: ['evening','latenight'] },
-  { icon: '📖', label: '读书', matchTags: ['#读书笔记','#读书感悟'], matchThemes: ['读书','笔记','感悟','阅读'], timeFit: ['evening','weekend','latenight'] },
-  { icon: '🎤', label: '演讲', matchTags: ['#TED','#演讲'], matchThemes: ['TED','演讲','罗翔','罗振宇'], timeFit: ['any'] },
-  { icon: '💪', label: '自律', matchTags: ['#自律','#成长'], matchThemes: ['自律','成长','逆商','坚持'], timeFit: ['morning','daytime'] },
-  { icon: '🌟', label: '名言', matchTags: ['#名人名言','#金句'], matchThemes: ['名人','名言','智慧'], timeFit: ['any'] },
-  { icon: '🔮', label: '格局', matchTags: ['#格局','#底层逻辑'], matchThemes: ['格局','底层逻辑','思维'], timeFit: ['morning','afternoon','workday'] },
-  { icon: '🌱', label: '成长', matchTags: ['#成长语录'], matchThemes: ['成长','终身成长','认知升级'], timeFit: ['any'] },
-  { icon: '✨', label: '旅行感悟', matchTags: ['#旅行随感'], matchThemes: ['旅行','感悟'], timeFit: ['weekend','daytime'] },
-  { icon: '🍔', label: '美食', matchTags: ['#美食'], matchThemes: ['美食','火锅','奶茶'], timeFit: ['noon','evening'] },
-  { icon: '💼', label: '职场', matchTags: ['#职场','#打工人'], matchThemes: ['职场','打工人'], timeFit: ['workday','daytime'] },
-  { icon: '😂', label: '搞笑', matchTags: ['#热梗','#搞笑'], matchThemes: ['搞笑','发疯'], timeFit: ['any'] },
-  { icon: '❤️', label: '恋爱', matchTags: ['#想念','#恋爱'], matchThemes: ['恋爱','思念','甜蜜'], timeFit: ['evening','latenight'] },
-  { icon: '☀️', label: '早安', matchTags: ['#早安'], matchThemes: ['早安','咖啡'], timeFit: ['morning'] },
+  { icon: '✍️', label: '高质量文案', matchTags: ['#高质量文案','#金句'], matchThemes: ['高质量文案','金句','宝藏文案','文案'], timeFit: ['any'] },
+  { icon: '📱', label: '朋友圈文案', matchTags: ['#朋友圈文案','#发圈'], matchThemes: ['朋友圈文案','朋友圈'], timeFit: ['any'] },
+  { icon: '🧠', label: '人间清醒', matchTags: ['#人间清醒','#清醒'], matchThemes: ['人间清醒','清醒','格局'], timeFit: ['any'] },
+  { icon: '🎬', label: '影视剧台词', matchTags: ['#影视剧台词','#台词'], matchThemes: ['影视剧台词','台词','经典'], timeFit: ['evening','latenight'] },
+  { icon: '🎤', label: '综艺金句', matchTags: ['#综艺金句','#综艺'], matchThemes: ['综艺金句','综艺'], timeFit: ['evening','weekend'] },
+  { icon: '⭐', label: '明星语录', matchTags: ['#明星语录','#偶像'], matchThemes: ['明星语录','明星'], timeFit: ['any'] },
+  { icon: '🔥', label: '社会热点', matchTags: ['#社会热点','#热门'], matchThemes: ['社会热点','热点'], timeFit: ['any'] },
+  { icon: '💬', label: '网络流行语', matchTags: ['#网络流行语','#热梗'], matchThemes: ['网络流行语','热梗','年度热词'], timeFit: ['any'] },
+  { icon: '📖', label: '书摘', matchTags: ['#书摘','#读书感悟'], matchThemes: ['书摘','读书感悟','读书'], timeFit: ['evening','weekend'] },
+  { icon: '🖊️', label: '顶级文笔', matchTags: ['#顶级文笔','#文字控'], matchThemes: ['顶级文笔','文字控'], timeFit: ['evening','latenight'] },
+  { icon: '💔', label: '扎心语录', matchTags: ['#扎心语录','#伤感'], matchThemes: ['扎心语录','emo','伤感'], timeFit: ['latenight','evening'] },
+  { icon: '📝', label: '经典语录', matchTags: ['#经典语录','#金句'], matchThemes: ['经典语录','金句','名言'], timeFit: ['any'] },
+  { icon: '🎓', label: 'TED金句', matchTags: ['#TED','#演讲'], matchThemes: ['TED','名人演讲','演讲'], timeFit: ['any'] },
+  { icon: '🧭', label: '深度思考', matchTags: ['#深度思考','#底层逻辑'], matchThemes: ['深度思考','底层逻辑','思维方式'], timeFit: ['evening','latenight'] },
+  { icon: '🌱', label: '终身成长', matchTags: ['#终身成长','#成长'], matchThemes: ['终身成长','成长','格局'], timeFit: ['any'] },
+  { icon: '✈️', label: '旅行随感', matchTags: ['#旅行随感','#旅行文案'], matchThemes: ['旅行随感','旅行文案','旅行'], timeFit: ['weekend','daytime'] },
+  { icon: '🍜', label: '晒美食', matchTags: ['#美食文案','#晒美食'], matchThemes: ['晒美食文案','美食','干饭'], timeFit: ['noon','evening'] },
+  { icon: '☀️', label: '早安', matchTags: ['#早安'], matchThemes: ['早安','元气'], timeFit: ['morning'] },
   { icon: '🌙', label: '晚安', matchTags: ['#晚安'], matchThemes: ['晚安','深夜'], timeFit: ['latenight','evening'] },
-  { icon: '😈', label: '颜文字', matchTags: ['#颜文字'], matchThemes: ['颜文字','创意'], timeFit: ['any'] },
-  { icon: '😢', label: '深夜emo', matchTags: ['#emo','#伤感'], matchThemes: ['emo','伤感','失眠'], timeFit: ['latenight','evening'] },
+  { icon: '💕', label: '表白', matchTags: ['#表白','#恋爱'], matchThemes: ['表白','恋爱','甜蜜'], timeFit: ['evening','latenight'] },
+  { icon: '🙏', label: '高情商感谢', matchTags: ['#高情商','#感谢'], matchThemes: ['高情商感谢','感谢','感恩'], timeFit: ['any'] },
+  { icon: '💗', label: '表达想念', matchTags: ['#想念','#思念'], matchThemes: ['表达想念','想念','思念'], timeFit: ['evening','latenight'] },
+  { icon: '🌈', label: '彩虹屁', matchTags: ['#彩虹屁','#夸夸'], matchThemes: ['彩虹屁','夸夸'], timeFit: ['any'] },
+  { icon: '🎂', label: '生日祝福', matchTags: ['#生日祝福','#生日'], matchThemes: ['生日祝福','生日'], timeFit: ['any'] },
+  { icon: '🤗', label: '安慰鼓励', matchTags: ['#安慰','#鼓励'], matchThemes: ['安慰鼓励','治愈','温暖'], timeFit: ['any'] },
+  { icon: '😈', label: '优雅怼人', matchTags: ['#优雅怼人','#高情商'], matchThemes: ['优雅怼人','怼人'], timeFit: ['any'] },
+  { icon: '📸', label: 'PLOG/INS', matchTags: ['#PLOG文案','#INS文案'], matchThemes: ['PLOG文案','INS文案','日签文案'], timeFit: ['any'] },
+  { icon: '👶', label: '晒娃', matchTags: ['#晒娃','#亲子'], matchThemes: ['晒娃文案','亲子'], timeFit: ['any'] },
+  { icon: '🌸', label: '春日碎片', matchTags: ['#春日碎片'], matchThemes: ['春日碎片','日常'], timeFit: ['daytime','weekend'] },
+  { icon: '😈', label: 'emoji颜文字', matchTags: ['#颜文字','#emoji'], matchThemes: ['emoji颜文字','颜文字'], timeFit: ['any'] },
+  { icon: '🍀', label: '好运文案', matchTags: ['#好运','#旺自己'], matchThemes: ['好运金句','好运文案','旺自己文案'], timeFit: ['morning','any'] },
+  { icon: '♈', label: '星座文案', matchTags: ['#星座','#星座文案'], matchThemes: ['十二星座文案','星座','白羊座文案','天蝎座文案'], timeFit: ['any'] },
+  { icon: '🧩', label: 'MBTI文案', matchTags: ['#MBTI','#性格'], matchThemes: ['MBTI文案','MBTI','INTJ','INFP'], timeFit: ['any'] },
+  { icon: '💼', label: '职场', matchTags: ['#职场','#打工人'], matchThemes: ['职场','打工人'], timeFit: ['workday','daytime'] },
   { icon: '🏃', label: '健身', matchTags: ['#健身','#运动'], matchThemes: ['健身','运动','跑步'], timeFit: ['morning','afternoon'] },
   { icon: '🎮', label: '游戏', matchTags: ['#游戏','#电竞'], matchThemes: ['游戏','电竞','开黑'], timeFit: ['evening','latenight','weekend'] },
 ];
@@ -1150,13 +1488,16 @@ const ALL_POPULAR_COPIES_NORMAL = [
   ALL_POPULAR_COPIES_NORMAL.forEach((c,i) => { if(!c.updatedAt){const h=Math.floor(i/3)+1;const t=new Date(base.getTime()-h*3600000);c.updatedAt=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;}});
 })();
 
-// 检测文本是否为 ASCII art（多行 braille/特殊字符排列），需要等宽字体渲染
+// 检测文本是否为 ASCII art / 颜文字（多行 braille/特殊字符排列），需要等宽字体渲染
 function isAsciiArt(text) {
   if (!text) return false;
-  // 包含 braille 字符 (U+2800-U+28FF) 或 box drawing 字符，并且有多行
-  const hasBraille = /[\u2800-\u28FF]/.test(text);
   const isMultiline = text.includes('\n') && text.split('\n').length >= 3;
-  return hasBraille && isMultiline;
+  if (!isMultiline) return false;
+  // 包含 braille 字符 (U+2800-U+28FF)
+  const hasBraille = /[\u2800-\u28FF]/.test(text);
+  // 包含 box drawing / line drawing 字符
+  const hasBoxDrawing = /[\u2500-\u257F\u2502\u2503\u2506\u2507\u250A\u250B\u2550-\u256C\u2574-\u257F┆┃│┊┋]/.test(text);
+  return hasBraille || hasBoxDrawing;
 }
 
 function formatFreshness(d) {
@@ -1169,24 +1510,78 @@ function formatFreshness(d) {
   return d.slice(5,16)+'更新';
 }
 
-// ========== 穿插算法 ==========
+// ========== 穿插算法（v4: 按最新排序 + 每屏去同质化 + 50%常用库混合）==========
 function buildShuffledCopies() {
-  const hotByKey = {};
-  ALL_POPULAR_COPIES_HOT.forEach(c => { const k=c.text.slice(0,15); if(!hotByKey[k]) hotByKey[k]=[]; hotByKey[k].push(c); });
-  const keys=Object.keys(hotByKey), hotS=[];
-  let more=true;
-  while(more){more=false;for(const k of keys){if(hotByKey[k].length){hotS.push(hotByKey[k].shift());more=true;}}}
-  const normS=[...ALL_POPULAR_COPIES_NORMAL].sort(()=>Math.random()-.5);
-  const result=[];
-  for(let i=0;i<normS.length;i++){result.push({...hotS[i%hotS.length]});result.push(normS[i]);}
-  // 去重检查
-  for(let i=1;i<result.length;i++){
-    const ws=Math.max(0,i-9),wi=result.slice(ws,i),wt=wi.map(x=>x.theme);
-    if(wt.includes(result[i].theme)){for(let j=i+1;j<Math.min(i+30,result.length);j++){if(!wt.includes(result[j].theme)){[result[i],result[j]]=[result[j],result[i]];break;}}}
+  // 1. 合并所有非常用库内容
+  const crawled = [...ALL_POPULAR_COPIES_HOT.map(c => ({...c})), ...ALL_POPULAR_COPIES_NORMAL.map(c => ({...c}))];
+  
+  // 2. 获取常用库内容（如果已加载）
+  const libItems = (typeof COMMON_LIB_SEEDS !== 'undefined' ? COMMON_LIB_SEEDS : []).map(c => ({...c}));
+  
+  // 3. 按最新抓取时间排序（新的在前）
+  crawled.sort((a, b) => {
+    const ta = a._crawlTime || (a.updatedAt ? new Date(a.updatedAt.replace(' ','T')).getTime() : 0);
+    const tb = b._crawlTime || (b.updatedAt ? new Date(b.updatedAt.replace(' ','T')).getTime() : 0);
+    return tb - ta;
+  });
+  
+  // 随机打乱常用库内容
+  const shuffledLib = [...libItems].sort(() => Math.random() - 0.5);
+  
+  // 4. 穿插合并：每屏10条，其中约5条来自常用库、5条来自抓取内容
+  const result = [];
+  let crawlIdx = 0, libIdx = 0;
+  const PAGE_SIZE = 10;
+  const LIB_PER_PAGE = 5; // 每页5条常用库
+  
+  while (crawlIdx < crawled.length || libIdx < shuffledLib.length) {
+    const pageThemes = new Set();
+    const page = [];
+    
+    // 先插入常用库内容
+    let libAdded = 0;
+    while (libAdded < LIB_PER_PAGE && libIdx < shuffledLib.length && page.length < PAGE_SIZE) {
+      const item = shuffledLib[libIdx];
+      const theme = item.theme || '';
+      if (!pageThemes.has(theme)) {
+        pageThemes.add(theme);
+        page.push(item);
+        libAdded++;
+      }
+      libIdx++;
+    }
+    
+    // 再补充抓取内容
+    while (page.length < PAGE_SIZE && crawlIdx < crawled.length) {
+      const item = crawled[crawlIdx];
+      const theme = item.theme || item.text.slice(0, 10);
+      if (!pageThemes.has(theme)) {
+        pageThemes.add(theme);
+        page.push(item);
+      }
+      crawlIdx++;
+    }
+    
+    // 如果页面不满，从剩余内容补
+    while (page.length < PAGE_SIZE && libIdx < shuffledLib.length) {
+      page.push(shuffledLib[libIdx++]);
+    }
+    while (page.length < PAGE_SIZE && crawlIdx < crawled.length) {
+      page.push(crawled[crawlIdx++]);
+    }
+    
+    // 随机打乱页面内顺序，使穿插更自然
+    page.sort(() => Math.random() - 0.5);
+    result.push(...page);
+    
+    if (page.length === 0) break; // 安全退出
   }
-  // 按时间适配度排序：适合当前时段的排前面，不适合的排后面（但不完全隐藏）
+  
+  // 5. 按时间适配度微调：适合当前时段的优先
   const fitItems = result.filter(c => isTimeFit(c.timeFit));
   const unfitItems = result.filter(c => !isTimeFit(c.timeFit));
+  
+  // 保持去同质化的顺序，只是把适合的排前面
   return [...fitItems, ...unfitItems];
 }
 
@@ -1761,18 +2156,15 @@ function generateClones(item) {
   return all.slice(0,3);
 }
 
-// ========== 每小时刷新 ==========
+// ========== 每小时刷新（v4: 配合自动抓取）==========
 let lastRefreshHour = new Date().getHours();
 function checkHourlyRefresh(){
   const ch=new Date().getHours();
   if(ch!==lastRefreshHour){
     lastRefreshHour=ch;
-    const ns=(()=>{const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;})();
-    const all=[...ALL_POPULAR_COPIES_HOT,...ALL_POPULAR_COPIES_NORMAL];
-    all.sort(()=>Math.random()-.5).slice(0,4).forEach(c=>{c.updatedAt=ns;c._isNew=true;});
     if(document.getElementById('recSection').style.display!=='none'){
       const r=buildShuffledCopies();ALL_POPULAR_COPIES.length=0;r.forEach(c=>ALL_POPULAR_COPIES.push(c));
-      popPage=0;renderPopularCopies();updateRefreshTime();toast('🔥 发现新内容，已自动更新！');
+      popPage=0;renderPopularCopies();updateRefreshTime();
     }
   }
 }
@@ -1793,14 +2185,42 @@ function renderRecommend(){
     const origIdx = HOT_TOPICS.indexOf(t);
     return `<div class="hot-item" onclick="openTopic(${origIdx})"><div class="hot-rank r${i+1}">${i+1}</div><div class="hot-title">${t.title} ${srcB(t.src)}</div><div class="hot-heat">${t.heat}</div></div>`;
   }).join('');
-  // 按时间适配度排序分类推荐
-  const sortedCats = [...REC_CATEGORIES].sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
-  document.getElementById('recCats').innerHTML=sortedCats.map((c,i)=>{
-    const origIdx = REC_CATEGORIES.indexOf(c);
-    return `<div class="rec-cat" onclick="openCategory(${origIdx})"><span class="cat-icon">${c.icon}</span>${c.label}</div>`;
-  }).join('');
+  // 按时间适配度排序分类推荐，并过滤掉句子数<=10的分类
+  const sortedCats = [...REC_CATEGORIES]
+    .map(c => {
+      const origIdx = REC_CATEGORIES.indexOf(c);
+      const count = matchCopies(c.matchTags, c.matchThemes, []).length;
+      return { ...c, _origIdx: origIdx, _count: count };
+    })
+    .filter(c => c._count > 10)
+    .sort((a,b) => timeScore(b.timeFit) - timeScore(a.timeFit));
+  const CAT_SHOW_LIMIT = 10;
+  const catContainer = document.getElementById('recCats');
+  const renderCatTags = (showAll) => {
+    const visibleCats = showAll ? sortedCats : sortedCats.slice(0, CAT_SHOW_LIMIT);
+    catContainer.innerHTML = visibleCats.map(c => {
+      return `<div class="rec-cat" onclick="openCategory(${c._origIdx})"><span class="cat-icon">${c.icon}</span>${c.label}</div>`;
+    }).join('') + (sortedCats.length > CAT_SHOW_LIMIT ? (showAll
+      ? `<div class="rec-cat" onclick="toggleCatMore(false)" style="color:var(--pri-dk);border-color:var(--pri)"><span class="cat-icon">🔼</span>收起</div>`
+      : `<div class="rec-cat" onclick="toggleCatMore(true)" style="color:var(--pri-dk);border-color:var(--pri)"><span class="cat-icon">📂</span>更多 +${sortedCats.length - CAT_SHOW_LIMIT}</div>`) : '');
+  };
+  window._sortedCatsForToggle = sortedCats;
+  renderCatTags(false);
   renderPopularCopies();
   updateRefreshTime();
+}
+
+// ========== 分类标签展开/收起 ==========
+function toggleCatMore(showAll) {
+  const sortedCats = window._sortedCatsForToggle || [];
+  const CAT_SHOW_LIMIT = 10;
+  const catContainer = document.getElementById('recCats');
+  const visibleCats = showAll ? sortedCats : sortedCats.slice(0, CAT_SHOW_LIMIT);
+  catContainer.innerHTML = visibleCats.map(c => {
+    return `<div class="rec-cat" onclick="openCategory(${c._origIdx})"><span class="cat-icon">${c.icon}</span>${c.label}</div>`;
+  }).join('') + (sortedCats.length > CAT_SHOW_LIMIT ? (showAll
+    ? `<div class="rec-cat" onclick="toggleCatMore(false)" style="color:var(--pri-dk);border-color:var(--pri)"><span class="cat-icon">🔼</span>收起</div>`
+    : `<div class="rec-cat" onclick="toggleCatMore(true)" style="color:var(--pri-dk);border-color:var(--pri)"><span class="cat-icon">📂</span>更多 +${sortedCats.length - CAT_SHOW_LIMIT}</div>`) : '');
 }
 
 // ========== 语录筛选 ==========
@@ -1808,7 +2228,8 @@ const FILTER_PAGE_SIZE=10;
 let filterItems=[],filterPage=0;
 
 function matchCopies(mTags,mThemes,mText){
-  const all=[...ALL_POPULAR_COPIES_HOT,...ALL_POPULAR_COPIES_NORMAL];
+  const libItems = typeof COMMON_LIB_SEEDS !== 'undefined' ? COMMON_LIB_SEEDS : [];
+  const all=[...ALL_POPULAR_COPIES_HOT,...ALL_POPULAR_COPIES_NORMAL,...libItems];
   const seen=new Set(),results=[];
   for(const c of all){
     const k=c.text.slice(0,50);if(seen.has(k))continue;
@@ -1849,12 +2270,16 @@ function renderFilterPage(){
   document.getElementById('filterList').innerHTML=items.map((p,idx)=>{
     const uid=`f-${filterPage}-${idx}`,tagsH=(p.tags||[]).map((t,ti)=>ti<2?`<span class="pop-tag">${t}</span>`:`<span class="pop-tag pop-tag-ai">${t}</span>`).join('');
     const fr=formatFreshness(p.updatedAt);
+    const isCrawled = !!p._crawled;
+    const actionBtn = isCrawled
+      ? `<button class="pop-btn pop-view-btn" onclick="event.stopPropagation();viewOriginal('${(p._originalUrl||'#').replace(/'/g,"\\'")}')">查看原帖</button>`
+      : `<button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneF(${filterPage},${idx},this)">克隆生成</button>`;
     return `<div class="pop-item${p.hot?' pop-hot':''}">
       ${p.hot?'<span class="hot-badge">hot</span>':''}
       <div class="pop-tags">${tagsH}</div><div class="pop-text${isAsciiArt(p.text)?' ascii-art':''}">${p.text}</div>
       <div class="pop-foot"><span class="pop-meta">${p.hot?'🔥 ':''}${p.meta}${fr?' · '+fr:''}</span>
-      <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPop(this,\`${p.text.replace(/`/g,"\\`")}\`)">复制</button>
-      <button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneF(${filterPage},${idx},this)">克隆生成</button></div></div>
+      <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPopFilter(this,${start+idx})">复制</button>
+      ${actionBtn}</div></div>
       <div class="clone-area" id="ca-${uid}" style="display:none"></div></div>`;
   }).join('');
   const tp=Math.max(1,Math.ceil(filterItems.length/FILTER_PAGE_SIZE));
@@ -1868,7 +2293,12 @@ function cloneF(pg,idx,btn){
   btn.textContent='生成中...';btn.disabled=true;
   setTimeout(()=>{
     const cl=generateClones(item);
-    area.innerHTML=cl.map((t,i)=>`<div class="clone-item" style="animation-delay:${i*0.1}s"><div class="clone-label">同款 ${i+1}</div><div class="clone-text">${t}</div><button class="pop-btn pop-copy clone-copy-btn" onclick="event.stopPropagation();cpPop(this,\`${t.replace(/`/g,"\\`")}\`)">复制</button></div>`).join('');
+    window._cloneTexts = window._cloneTexts || {};
+    area.innerHTML=cl.map((t,i)=>{
+      const cid = `clone-${pg}-${idx}-${i}`;
+      window._cloneTexts[cid] = t;
+      return `<div class="clone-item" style="animation-delay:${i*0.1}s"><div class="clone-label">同款 ${i+1}</div><div class="clone-text${isAsciiArt(t)?' ascii-art':''}">${t}</div><button class="pop-btn pop-copy clone-copy-btn" onclick="event.stopPropagation();cpPopClone(this,'${cid}')">复制</button></div>`;
+    }).join('');
     area.style.display='';btn.textContent='收起';btn.disabled=false;btn.classList.add('pop-clone-active');
   },600);
 }
@@ -1884,16 +2314,29 @@ function renderPopularCopies(){
     const gi=(start+idx)%ALL_POPULAR_COPIES.length;
     const tagsH=(p.tags||[]).map((t,ti)=>ti<2?`<span class="pop-tag">${t}</span>`:`<span class="pop-tag pop-tag-ai">${t}</span>`).join('');
     const fr=formatFreshness(p.updatedAt),isN=p._isNew;
+    const isCrawled = !!p._crawled;
+    const actionBtn = isCrawled
+      ? `<button class="pop-btn pop-view-btn" onclick="event.stopPropagation();viewOriginal('${(p._originalUrl||'#').replace(/'/g,"\\'")}')">查看原帖</button>`
+      : `<button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneG(${gi},this)">克隆生成</button>`;
     return `<div class="pop-item${p.hot?' pop-hot':''}" id="pc-${gi}">
       ${p.hot?'<span class="hot-badge">hot</span>':''}
       <div class="pop-tags">${tagsH}</div><div class="pop-text${isAsciiArt(p.text)?' ascii-art':''}">${p.text}</div>
       <div class="pop-foot"><span class="pop-meta">${p.hot?'🔥 ':''}${p.meta}${fr?' · '+fr:''}</span>
-      <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPop(this,\`${p.text.replace(/`/g,"\\`")}\`)">复制</button>
-      <button class="pop-btn pop-clone-btn" onclick="event.stopPropagation();cloneG(${gi},this)">克隆生成</button></div></div>
+      <div class="pop-actions"><button class="pop-btn pop-copy" onclick="event.stopPropagation();cpPopIdx(this,${gi})">复制</button>
+      ${actionBtn}</div></div>
       <div class="clone-area" id="ca-${gi}" style="display:none"></div></div>`;
   }).join('');
   const tp=Math.ceil(ALL_POPULAR_COPIES.length/POP_PAGE_SIZE),cp=popPage%tp;
-  document.getElementById('popPager').innerHTML=Array.from({length:tp},(_,i)=>`<span class="pg-dot${i===cp?' active':''}" onclick="goPP(${i})"></span>`).join('')+`<span class="pg-info">${cp+1}/${tp}</span>`;
+  document.getElementById('popPager').innerHTML=Array.from({length:Math.min(tp,10)},(_,i)=>`<span class="pg-dot${i===cp?' active':''}" onclick="goPP(${i})"></span>`).join('')+`<span class="pg-info">${cp+1}/${tp}</span>`;
+}
+
+function viewOriginal(url) {
+  if (url && url !== '#') {
+    toast('🔗 正在跳转到原帖...');
+    setTimeout(() => toast('📱 原帖链接已复制到剪贴板'), 500);
+  } else {
+    toast('📱 原帖链接暂不可用');
+  }
 }
 
 function cloneG(gi,btn){
@@ -1902,9 +2345,41 @@ function cloneG(gi,btn){
   btn.textContent='生成中...';btn.disabled=true;
   setTimeout(()=>{
     const cl=generateClones(item);
-    area.innerHTML=cl.map((t,i)=>`<div class="clone-item" style="animation-delay:${i*0.1}s"><div class="clone-label">同款 ${i+1}</div><div class="clone-text">${t}</div><button class="pop-btn pop-copy clone-copy-btn" onclick="event.stopPropagation();cpPop(this,\`${t.replace(/`/g,"\\`")}\`)">复制</button></div>`).join('');
+    window._cloneTexts = window._cloneTexts || {};
+    area.innerHTML=cl.map((t,i)=>{
+      const cid = `cloneg-${gi}-${i}`;
+      window._cloneTexts[cid] = t;
+      return `<div class="clone-item" style="animation-delay:${i*0.1}s"><div class="clone-label">同款 ${i+1}</div><div class="clone-text${isAsciiArt(t)?' ascii-art':''}">${t}</div><button class="pop-btn pop-copy clone-copy-btn" onclick="event.stopPropagation();cpPopClone(this,'${cid}')">复制</button></div>`;
+    }).join('');
     area.style.display='';btn.textContent='收起';btn.disabled=false;btn.classList.add('pop-clone-active');
   },600);
+}
+
+// 通过索引复制热门文案（避免多行文本嵌入onclick属性）
+function cpPopIdx(btn,gi){
+  const text = ALL_POPULAR_COPIES[gi].text;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='已复制';btn.classList.add('copied');toast('复制成功！');
+    setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+  });
+}
+
+// 通过索引复制筛选列表文案
+function cpPopFilter(btn,idx){
+  const text = filterItems[idx].text;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='已复制';btn.classList.add('copied');toast('复制成功！');
+    setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+  });
+}
+
+// 通过ID复制克隆文本
+function cpPopClone(btn,cid){
+  const text = (window._cloneTexts || {})[cid] || '';
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='已复制';btn.classList.add('copied');toast('复制成功！');
+    setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+  });
 }
 
 function cpPop(btn,text){
@@ -1954,10 +2429,9 @@ function doSearch() {
   const query = document.getElementById('searchInput').value.trim();
   if (!query) { toast('请输入搜索关键词'); return; }
 
-  const all = [...ALL_POPULAR_COPIES_HOT, ...ALL_POPULAR_COPIES_NORMAL];
+  const libItems = typeof COMMON_LIB_SEEDS !== 'undefined' ? COMMON_LIB_SEEDS : [];
+  const all = [...ALL_POPULAR_COPIES_HOT, ...ALL_POPULAR_COPIES_NORMAL, ...libItems];
   const qLower = query.toLowerCase();
-
-  // 搜索：匹配文本内容、标签、主题
   const results = all.filter(item => {
     const textMatch = item.text && item.text.toLowerCase().includes(qLower);
     const tagMatch = item.tags && item.tags.some(t => t.toLowerCase().includes(qLower));
@@ -1998,134 +2472,171 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
 });
 
-// ========== 运营抓取配置面板 ==========
-let crawlKeywords = [];
-let crawlTimer = null;
-let crawlRunning = false;
-let crawlLogs = [];
-
-// 面板展开/收起
-function toggleCrawlPanel() {
-  const body = document.getElementById('crawlBody');
-  const arrow = document.getElementById('crawlArrow');
-  if (body.style.display === 'none') {
-    body.style.display = '';
-    arrow.classList.add('open');
-  } else {
-    body.style.display = 'none';
-    arrow.classList.remove('open');
-  }
-}
-
-// 关键词管理
-function renderCrawlKwTags() {
-  const container = document.getElementById('crawlKwTags');
-  container.innerHTML = crawlKeywords.map((kw, i) =>
-    `<span class="crawl-kw-tag">${kw}<span class="kw-del" onclick="removeCrawlKw(${i})">×</span></span>`
-  ).join('');
-}
-
-function addCrawlKw() {
-  const input = document.getElementById('crawlKwInput');
-  const kw = input.value.trim();
-  if (!kw) return;
-  if (crawlKeywords.includes(kw)) { toast('关键词已存在'); return; }
-  if (crawlKeywords.length >= 10) { toast('最多添加10个关键词'); return; }
-  crawlKeywords.push(kw);
-  input.value = '';
-  renderCrawlKwTags();
-  saveCrawlConfig();
-  // 如果配置完整，自动开启抓取
-  autoStartCrawlIfReady();
-}
-
-function removeCrawlKw(i) {
-  crawlKeywords.splice(i, 1);
-  renderCrawlKwTags();
-  saveCrawlConfig();
-  if (crawlKeywords.length === 0 && crawlRunning) {
-    stopCrawl();
-    toast('关键词清空，抓取已暂停');
-  }
-}
-
-// 回车添加关键词
-document.getElementById('crawlKwInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') { e.preventDefault(); addCrawlKw(); }
-});
-
-// 获取选中的源
-function getSelectedSources() {
-  const checks = document.querySelectorAll('#crawlSources input[type=checkbox]');
-  return Array.from(checks).filter(c => c.checked).map(c => c.value);
-}
-
-// 源名称映射
+// ========== 源名称映射 ==========
 const SOURCE_NAME_MAP = { douyin: '抖音', weibo: '微博', xiaohongshu: '小红书' };
 const SOURCE_LOG_CLASS = { douyin: 'log-douyin', weibo: 'log-weibo', xiaohongshu: 'log-xhs' };
 
-// 获取频次分钟数
-function getCrawlFreqMin() {
-  return parseInt(document.getElementById('crawlFreq').value) || 60;
+// ========== v4: 自动抓取系统（预置关键词，每小时自动抓取，内容库持久化）==========
+// 全部预置关键词
+const CRAWL_KEYWORDS = [
+  '文案','金句','朋友圈文案',
+  '影视剧台词','综艺金句','明星语录','社会热点','网络流行语','年度热词','书摘',
+  '高质量文案','人间清醒','顶级文笔','经典语录','金句','宝藏文案','朋友圈文案','文字控','扎心语录',
+  'TED金句','名人演讲','读书感悟','旅行随感','人生感悟','思维方式','格局','底层逻辑','深度思考','终身成长',
+  '早安','晚安','表白','高情商感谢','表达想念','夸夸','彩虹屁','生日祝福','安慰鼓励','优雅怼人',
+  'PLOG文案','INS文案','日签文案','晒美食文案','旅行文案','晒娃文案','春日碎片','emoji颜文字',
+  '好运金句','好运文案','旺自己文案',
+  '十二星座文案','白羊座文案','水瓶座文案','双鱼座文案','金牛座文案','双子座文案','巨蟹座文案','狮子座文案','处女座文案','天秤座文案','天蝎座文案','射手座文案','摩羯座文案',
+  'MBTI文案','MBTI朋友圈文案','INTJ文案','INTP文案','INFJ文案','INFP文案','ISTJ文案','ISFJ文案','ISTP文案','ISFP文案','ENTJ文案','ENTP文案','ENFJ文案','ENFP文案','ESTJ文案','ESFJ文案','ESTP文案','ESFP文案',
+];
+// 去重
+const CRAWL_KEYWORDS_UNIQUE = [...new Set(CRAWL_KEYWORDS)];
+const CRAWL_SOURCES = ['xiaohongshu','weibo','douyin'];
+let crawlTimer = null;
+let crawlLogs = [];
+let crawlRunning = false;
+let crawlNextTime = null;
+
+// ========== 内容库持久化（localStorage）==========
+const CONTENT_DB_KEY = 'ai_copywriter_content_db_v4';
+const CRAWL_LOG_KEY = 'ai_copywriter_crawl_logs_v4';
+const FEEDBACK_KEY = 'ai_copywriter_feedback_v4';
+
+function loadContentDB() {
+  try {
+    const raw = localStorage.getItem(CONTENT_DB_KEY);
+    if (raw) {
+      const db = JSON.parse(raw);
+      if (db && db.length) {
+        // 合并到 ALL_POPULAR_COPIES_NORMAL，去重
+        const existTexts = new Set(ALL_POPULAR_COPIES_NORMAL.map(c => c.text));
+        let added = 0;
+        for (const item of db) {
+          if (!existTexts.has(item.text)) {
+            ALL_POPULAR_COPIES_NORMAL.push(item);
+            existTexts.add(item.text);
+            added++;
+          }
+        }
+        if (added > 0) console.log(`[内容库] 从本地加载 ${added} 条累积内容`);
+      }
+    }
+  } catch(e) { console.error('[内容库] 加载失败', e); }
 }
 
-// 模拟抓取：生成随机内容并添加到文案库
-function simulateCrawl() {
-  const sources = getSelectedSources();
-  const keywords = crawlKeywords;
-  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
-  if (!keywords.length) { toast('请至少添加一个关键词'); return; }
+function saveContentDB() {
+  try {
+    // 保存所有 _crawled 内容
+    const crawled = ALL_POPULAR_COPIES_NORMAL.filter(c => c._crawled);
+    localStorage.setItem(CONTENT_DB_KEY, JSON.stringify(crawled));
+  } catch(e) { console.error('[内容库] 保存失败', e); }
+}
 
+function loadCrawlLogs() {
+  try {
+    const raw = localStorage.getItem(CRAWL_LOG_KEY);
+    if (raw) crawlLogs = JSON.parse(raw);
+  } catch(e) {}
+}
+
+function saveCrawlLogs() {
+  try {
+    localStorage.setItem(CRAWL_LOG_KEY, JSON.stringify(crawlLogs.slice(0, 50)));
+  } catch(e) {}
+}
+
+// ========== 模拟抓取（近三天发布，1000赞以上）==========
+// 正文内容模板（不再使用标题式，直接是可用的文案正文）
+const crawlTemplatesFull = [
+  kw => `生活不是等待暴风雨过去，而是学会在${kw}中起舞`,
+  kw => `所谓${kw}，不过是把日子过成自己想要的样子`,
+  kw => `在${kw}的世界里，每一个细节都值得被认真对待`,
+  kw => `${kw}教会我最重要的一件事：慢慢来，比较快`,
+  kw => `人生就是一场关于${kw}的修行，急不得，也慢不得`,
+  kw => `如果${kw}有答案，那答案一定藏在坚持里`,
+  kw => `没有什么比认真对待${kw}更酷的事了`,
+  kw => `把每一天都当作关于${kw}的全新篇章来书写`,
+  kw => `关于${kw}这件事，越简单越高级`,
+  kw => `热爱${kw}的人，运气都不会太差`,
+  kw => `偶尔停下来想想${kw}，你会发现答案一直都在`,
+  kw => `生活的底色是${kw}，而我们需要为它涂上自己喜欢的颜色`,
+  kw => `真正懂${kw}的人，都在默默发光`,
+  kw => `当你开始认真思考${kw}，改变就已经发生了`,
+  kw => `所有关于${kw}的美好，都值得被记录下来`,
+  kw => `与${kw}和解，就是与自己和解`,
+  kw => `${kw}最迷人的地方在于，它永远有新的可能`,
+  kw => `日子是自己过的，${kw}是自己选的，人生嘛，开心最重要`,
+  kw => `在${kw}面前，我们都是永远的学生`,
+  kw => `愿你在${kw}的路上，步步生花，处处有光`,
+  kw => `有人说${kw}很难，但我觉得，难的是不去开始`,
+  kw => `${kw}的意义，不在于结果，而在于过程中你成为了谁`,
+  kw => `把${kw}过成诗，把日常活成花`,
+  kw => `认真生活的人，${kw}也会认真回报你`,
+  kw => `关于${kw}，我最大的感悟是：做自己就好`,
+  kw => `${kw}这条路上，慢一点没关系，重要的是方向对`,
+  kw => `每一次关于${kw}的思考，都是一次与自己的对话`,
+  kw => `所谓成长，就是在${kw}中不断找到更好的自己`,
+  kw => `把${kw}融入日常，你会发现生活变得不一样了`,
+  kw => `${kw}不需要多么轰轰烈烈，平淡中的真实最珍贵`,
+];
+
+function simulateCrawlV4() {
   const now = new Date();
   const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
   const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-  // 每个源 × 每个关键词 随机产出1-3条
+  // 随机抽取一批关键词（每次抓取全部关键词太多，模拟分批）
+  const batchSize = Math.min(15, CRAWL_KEYWORDS_UNIQUE.length);
+  const batchKws = [...CRAWL_KEYWORDS_UNIQUE].sort(() => Math.random() - .5).slice(0, batchSize);
+  
   let totalCount = 0;
+  let totalLikes = 0;
   const perSourceCount = {};
+  const existTexts = new Set([...ALL_POPULAR_COPIES_HOT, ...ALL_POPULAR_COPIES_NORMAL].map(c => c.text));
 
-  const crawlTemplates = [
-    kw => `今天的${kw}真的太绝了，姐妹们快冲！`,
-    kw => `关于${kw}，我有一个不成熟的小建议...`,
-    kw => `${kw}｜这是我见过最走心的分享了`,
-    kw => `被${kw}治愈的一天 🌸`,
-    kw => `${kw}真的yyds，不接受反驳！`,
-    kw => `分享一个${kw}相关的宝藏内容～`,
-    kw => `刷到一条关于${kw}的内容，太有共鸣了`,
-    kw => `${kw}爱好者集合！这条不许划走`,
-    kw => `来聊聊${kw}这件事，评论区炸了`,
-    kw => `我的${kw}日记 📝 今天也很充实`,
-    kw => `${kw}的正确打开方式，建议收藏！`,
-    kw => `如果你也喜欢${kw}，那我们就是好朋友了 ♡`,
-    kw => `${kw}初体验，完全超出预期！`,
-    kw => `每次看到${kw}相关的内容都会心动`,
-    kw => `${kw}这个话题最近好火，来凑个热闹`,
-  ];
-
-  for (const src of sources) {
+  for (const src of CRAWL_SOURCES) {
     perSourceCount[src] = 0;
-    for (const kw of keywords) {
-      const count = Math.floor(Math.random() * 3) + 1;
+    for (const kw of batchKws) {
+      const count = Math.floor(Math.random() * 2) + 1; // 1-2 条
       for (let j = 0; j < count; j++) {
-        const tmpl = crawlTemplates[Math.floor(Math.random() * crawlTemplates.length)];
+        const tmpl = crawlTemplatesFull[Math.floor(Math.random() * crawlTemplatesFull.length)];
         const text = tmpl(kw);
+        if (existTexts.has(text)) continue; // 去重
+        existTexts.add(text);
         const srcLabel = src === 'xiaohongshu' ? 'xhs' : src;
+        const likes = Math.floor(Math.random() * 9000) + 1000; // 1000-10000赞
+        const likesStr = likes >= 10000 ? `${(likes/10000).toFixed(1)}w赞` : `${(likes/1000).toFixed(1)}k赞`;
+        // 为抓取内容生成场景标签
+        const CRAWL_SCENE_TEMPLATES = [
+          '适合发圈｜走心好文', '适合日常发｜值得收藏', '适合分享发｜引发共鸣',
+          '适合聊天发｜有深度', '适合配图发｜文艺范', '适合打卡发｜每日精选',
+          '适合发圈｜情绪共鸣', '适合收藏发｜经典语录', '适合睡前发｜治愈系',
+          '适合转发｜高质量内容', '适合朋友圈发｜有态度', '适合日签发｜正能量',
+        ];
+        const sceneTag = CRAWL_SCENE_TEMPLATES[Math.floor(Math.random() * CRAWL_SCENE_TEMPLATES.length)];
         const newItem = {
-          tags: [`#${kw}`, `#${SOURCE_NAME_MAP[src]}热门`, `来源：${SOURCE_NAME_MAP[src]}`],
+          tags: [`#${kw}`, `#${SOURCE_NAME_MAP[src]}热门`, sceneTag],
           text: text,
-          meta: `${(Math.random()*5+0.5).toFixed(1)}w人使用`,
+          meta: likesStr,
           theme: kw,
           src: srcLabel,
           updatedAt: dateStr,
           timeFit: ['any'],
-          _crawled: true
+          _crawled: true,
+          _likes: likes,
+          _crawlTime: now.getTime(),
+          _originalUrl: `https://www.example.com/${src}/${Date.now()}/${Math.random().toString(36).slice(2,8)}`,
         };
         ALL_POPULAR_COPIES_NORMAL.push(newItem);
         totalCount++;
+        totalLikes += likes;
         perSourceCount[src]++;
       }
     }
   }
+
+  // 保存到内容库
+  saveContentDB();
 
   // 重新构建 shuffled copies
   const r = buildShuffledCopies();
@@ -2140,187 +2651,215 @@ function simulateCrawl() {
   // 添加日志
   const logEntry = {
     time: timeStr,
-    sources: sources,
-    keywords: [...keywords],
+    date: dateStr,
+    keywords: [...batchKws],
     total: totalCount,
+    likes: totalLikes,
     perSource: { ...perSourceCount }
   };
   crawlLogs.unshift(logEntry);
-  if (crawlLogs.length > 20) crawlLogs.pop(); // 最多保留20条日志
-  renderCrawlLog();
+  if (crawlLogs.length > 50) crawlLogs = crawlLogs.slice(0, 50);
+  saveCrawlLogs();
+  renderCrawlStats();
 
-  toast(`✅ 抓取完成！新增 ${totalCount} 条内容`);
+  toast(`✅ 自动抓取完成！新增 ${totalCount} 条内容`);
 }
 
-// 渲染抓取日志
-function renderCrawlLog() {
-  const logSection = document.getElementById('crawlLog');
-  const logList = document.getElementById('crawlLogList');
-  if (!crawlLogs.length) {
-    logSection.style.display = 'none';
-    return;
-  }
-  logSection.style.display = '';
-  logList.innerHTML = crawlLogs.map(log => {
-    const srcBadges = log.sources.map(s =>
-      `<span class="crawl-log-src ${SOURCE_LOG_CLASS[s]}">${SOURCE_NAME_MAP[s]}</span>`
-    ).join('');
-    const kwStr = log.keywords.map(k => `「${k}」`).join(' ');
-    const perSrcDetail = log.sources.map(s =>
-      `${SOURCE_NAME_MAP[s]} ${log.perSource[s]}条`
-    ).join('、');
-    return `<div class="crawl-log-item">
-      <div class="crawl-log-time">🕐 ${log.time}</div>
-      <div class="crawl-log-sources">${srcBadges}</div>
-      <div>关键词：<span class="crawl-log-kws">${kwStr}</span></div>
-      <div>本次抓取 <span class="crawl-log-count">${log.total}</span> 条（${perSrcDetail}）</div>
-    </div>`;
-  }).join('');
-}
-
-function clearCrawlLog() {
-  crawlLogs = [];
-  renderCrawlLog();
-}
-
-// 开启/关闭抓取
-function toggleCrawl() {
-  if (crawlRunning) {
-    stopCrawl();
+// ========== 抓取日志面板 ==========
+function toggleCrawlStats() {
+  const body = document.getElementById('crawlStatsBody');
+  const arrow = document.getElementById('crawlStatsArrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.classList.add('open');
   } else {
-    startCrawl();
+    body.style.display = 'none';
+    arrow.classList.remove('open');
   }
 }
 
-function startCrawl() {
-  const sources = getSelectedSources();
-  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
-  if (!crawlKeywords.length) { toast('请至少添加一个关键词'); return; }
+function getCrawlStatsData() {
+  const libItems = typeof COMMON_LIB_SEEDS !== 'undefined' ? COMMON_LIB_SEEDS : [];
+  const all = [...ALL_POPULAR_COPIES_HOT, ...ALL_POPULAR_COPIES_NORMAL, ...libItems];
+  const topics = new Set();
+  let totalLikes = 0;
+  let sentences = 0;
+  for (const c of all) {
+    if (c.theme) topics.add(c.theme);
+    sentences++;
+    // 解析点赞数
+    if (c._likes) {
+      totalLikes += c._likes;
+    } else if (c.meta) {
+      const m = c.meta.match(/([\d.]+)(w|k)/);
+      if (m) {
+        totalLikes += m[2] === 'w' ? parseFloat(m[1]) * 10000 : parseFloat(m[1]) * 1000;
+      }
+    }
+  }
+  return { topics: topics.size, sentences, totalLikes: Math.round(totalLikes) };
+}
 
+function formatLikes(n) {
+  if (n >= 100000000) return (n / 100000000).toFixed(1) + '亿';
+  if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+  return String(n);
+}
+
+function renderCrawlStats() {
+  const stats = getCrawlStatsData();
+  document.getElementById('statTopics').textContent = stats.topics;
+  document.getElementById('statSentences').textContent = stats.sentences;
+  document.getElementById('statLikes').textContent = formatLikes(stats.totalLikes);
+
+  // 渲染最近日志
+  const logList = document.getElementById('crawlLogMini');
+  if (crawlLogs.length) {
+    logList.innerHTML = crawlLogs.slice(0, 5).map(log => {
+      const kwShow = log.keywords.slice(0, 3).map(k => `「${k}」`).join(' ');
+      const more = log.keywords.length > 3 ? ` +${log.keywords.length - 3}` : '';
+      return `<div class="crawl-log-mini-item">
+        <div class="crawl-log-mini-time">🕐 ${log.date || log.time}</div>
+        <div class="crawl-log-mini-detail">抓取 <span class="crawl-log-mini-count">${log.total}</span> 条 · ${kwShow}${more}</div>
+      </div>`;
+    }).join('');
+  } else {
+    logList.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:10px;text-align:center">暂无抓取记录</div>';
+  }
+
+  // 下次抓取时间
+  const nextEl = document.getElementById('crawlNextInfo');
+  if (crawlNextTime) {
+    const next = new Date(crawlNextTime);
+    nextEl.textContent = `⏱ 下次自动抓取：${String(next.getHours()).padStart(2,'0')}:${String(next.getMinutes()).padStart(2,'0')}`;
+  } else {
+    nextEl.textContent = '⏱ 自动抓取已就绪';
+  }
+}
+
+// ========== 自动抓取调度（每小时一次）==========
+function startAutoCrawl() {
   crawlRunning = true;
-  updateCrawlUI();
-  saveCrawlConfig();
-
-  // 立即执行一次
-  simulateCrawl();
-
-  // 设置定时器
-  const freqMs = getCrawlFreqMin() * 60 * 1000;
+  // 首次启动时立即执行一次
+  simulateCrawlV4();
+  // 每小时执行
   crawlTimer = setInterval(() => {
-    simulateCrawl();
-  }, freqMs);
-
-  toast(`🕷️ 抓取已开启，每 ${getCrawlFreqLabel()} 自动执行`);
+    simulateCrawlV4();
+    crawlNextTime = Date.now() + 3600000;
+    renderCrawlStats();
+  }, 3600000); // 1小时
+  crawlNextTime = Date.now() + 3600000;
+  renderCrawlStats();
 }
 
-function stopCrawl() {
-  crawlRunning = false;
-  if (crawlTimer) {
-    clearInterval(crawlTimer);
-    crawlTimer = null;
-  }
-  updateCrawlUI();
-  saveCrawlConfig();
-  toast('抓取已暂停');
-}
+// ========== 建议反馈系统 ==========
+let feedbackList = [];
 
-function crawlNow() {
-  const sources = getSelectedSources();
-  if (!sources.length) { toast('请至少选择一个抓取源'); return; }
-  if (!crawlKeywords.length) { toast('请至少添加一个关键词'); return; }
-  simulateCrawl();
-}
-
-function getCrawlFreqLabel() {
-  const v = getCrawlFreqMin();
-  const map = { 30: '30分钟', 60: '1小时', 120: '2小时', 360: '6小时', 720: '12小时', 1440: '24小时' };
-  return map[v] || v + '分钟';
-}
-
-function updateCrawlUI() {
-  const statusEl = document.getElementById('crawlStatus');
-  const btn = document.getElementById('crawlStartBtn');
-  if (crawlRunning) {
-    statusEl.textContent = `运行中 · 每${getCrawlFreqLabel()}`;
-    statusEl.className = 'crawl-status on';
-    btn.textContent = '⏸ 暂停抓取';
-    btn.classList.add('running');
-  } else {
-    statusEl.textContent = '未开启';
-    statusEl.className = 'crawl-status off';
-    btn.textContent = '▶ 开启抓取';
-    btn.classList.remove('running');
-  }
-}
-
-// 配置完整时自动开启
-function autoStartCrawlIfReady() {
-  if (crawlRunning) return; // 已在运行
-  const sources = getSelectedSources();
-  if (sources.length && crawlKeywords.length) {
-    startCrawl();
-  }
-}
-
-// 源选择变化时保存并检查自动开启
-document.querySelectorAll('#crawlSources input[type=checkbox]').forEach(cb => {
-  cb.addEventListener('change', () => {
-    saveCrawlConfig();
-    if (crawlRunning) {
-      // 重启定时器以更新配置
-      stopCrawl();
-      startCrawl();
-    }
-  });
-});
-
-// 频次变化时
-document.getElementById('crawlFreq').addEventListener('change', () => {
-  saveCrawlConfig();
-  if (crawlRunning) {
-    stopCrawl();
-    startCrawl();
-  }
-});
-
-// 持久化配置到 localStorage
-function saveCrawlConfig() {
-  const config = {
-    sources: getSelectedSources(),
-    keywords: crawlKeywords,
-    freq: getCrawlFreqMin(),
-    running: crawlRunning
-  };
-  try { localStorage.setItem('crawl_config', JSON.stringify(config)); } catch(e) {}
-}
-
-function loadCrawlConfig() {
+function loadFeedback() {
   try {
-    const raw = localStorage.getItem('crawl_config');
-    if (!raw) return;
-    const config = JSON.parse(raw);
-    // 恢复源选择
-    if (config.sources) {
-      document.querySelectorAll('#crawlSources input[type=checkbox]').forEach(cb => {
-        cb.checked = config.sources.includes(cb.value);
-      });
-    }
-    // 恢复关键词
-    if (config.keywords && config.keywords.length) {
-      crawlKeywords = config.keywords;
-      renderCrawlKwTags();
-    }
-    // 恢复频次
-    if (config.freq) {
-      document.getElementById('crawlFreq').value = String(config.freq);
-    }
-    // 恢复运行状态
-    if (config.running && config.sources && config.sources.length && config.keywords && config.keywords.length) {
-      startCrawl();
-    }
+    const raw = localStorage.getItem(FEEDBACK_KEY);
+    if (raw) feedbackList = JSON.parse(raw);
   } catch(e) {}
 }
 
-// 初始化
-updateCrawlUI();
-loadCrawlConfig();
+function saveFeedback() {
+  try {
+    localStorage.setItem(FEEDBACK_KEY, JSON.stringify(feedbackList));
+  } catch(e) {}
+}
+
+function toggleFeedback() {
+  const body = document.getElementById('feedbackBody');
+  const arrow = document.getElementById('feedbackArrow');
+  if (body.classList.contains('show')) {
+    body.classList.remove('show');
+    arrow.classList.remove('open');
+  } else {
+    body.classList.add('show');
+    arrow.classList.add('open');
+    renderFeedbackHistory();
+  }
+}
+
+function toggleFbTag(el) {
+  el.classList.toggle('active');
+}
+
+function submitFeedback() {
+  const text = document.getElementById('feedbackText').value.trim();
+  if (!text) { toast('请输入反馈内容'); return; }
+  
+  const activeTags = Array.from(document.querySelectorAll('.feedback-tag.active')).map(el => el.dataset.tag);
+  if (!activeTags.length) { toast('请至少选择一个标签'); return; }
+
+  const now = new Date();
+  const entry = {
+    text,
+    tags: activeTags,
+    time: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+    id: Date.now(),
+  };
+  feedbackList.unshift(entry);
+  saveFeedback();
+  
+  // 清空输入
+  document.getElementById('feedbackText').value = '';
+  document.querySelectorAll('.feedback-tag.active').forEach(el => el.classList.remove('active'));
+  
+  // 更新计数和历史
+  updateFeedbackCount();
+  renderFeedbackHistory();
+  toast('✅ 反馈已提交，感谢你的建议！');
+}
+
+function updateFeedbackCount() {
+  document.getElementById('feedbackCount').textContent = `${feedbackList.length}条`;
+}
+
+function renderFeedbackHistory() {
+  const container = document.getElementById('feedbackHistory');
+  if (!feedbackList.length) {
+    container.innerHTML = '';
+    return;
+  }
+  container.innerHTML = feedbackList.slice(0, 10).map(fb => `
+    <div class="feedback-history-item">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;margin-bottom:4px">${fb.text}</div>
+      <div class="feedback-history-tags">
+        ${fb.tags.map(t => `<span class="feedback-history-tag">${t}</span>`).join('')}
+      </div>
+      <div class="feedback-history-time">${fb.time}</div>
+    </div>
+  `).join('');
+}
+
+// 定时汇总反馈（模拟定时通知）
+function checkFeedbackNotify() {
+  const unnotified = feedbackList.filter(fb => !fb._notified);
+  if (unnotified.length >= 3) {
+    // 汇总打标
+    const tagSummary = {};
+    unnotified.forEach(fb => {
+      fb.tags.forEach(t => { tagSummary[t] = (tagSummary[t] || 0) + 1; });
+      fb._notified = true;
+    });
+    saveFeedback();
+    const summaryStr = Object.entries(tagSummary).sort((a,b) => b[1] - a[1]).map(([t,c]) => `${t}(${c})`).join('、');
+    console.log(`[反馈汇总] ${unnotified.length}条新反馈，标签分布：${summaryStr}`);
+    // 实际产品中这里会调用企微机器人/邮件通知
+  }
+}
+
+// 每30分钟检查一次反馈汇总
+setInterval(checkFeedbackNotify, 1800000);
+
+// ========== 初始化 ==========
+loadContentDB();
+loadCrawlLogs();
+loadFeedback();
+updateFeedbackCount();
+renderFeedbackHistory(); // 面板默认展开，需要渲染历史
+
+// 启动自动抓取
+startAutoCrawl();
